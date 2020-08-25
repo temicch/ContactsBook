@@ -24,15 +24,36 @@ namespace WebApplication2
 
             // Order is very important for these files to work, they have explicit dependencies
             bundles.Add(new ScriptBundle("~/bundles/MsAjaxJs").Include(
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjax.js",
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxApplicationServices.js",
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxTimer.js",
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxWebForms.js"));
+                "~/Scripts/WebForms/MsAjax/MicrosoftAjax.js",
+                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxApplicationServices.js",
+                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxTimer.js",
+                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxWebForms.js"));
+
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "materialize",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/materialize.min.js",
+                    DebugPath = "~/Scripts/materialize.js",
+                });
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "vue",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/vue.min.js",
+                    DebugPath = "~/Scripts/vue.js",
+                });
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "axios",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/axios.min.js",
+                    DebugPath = "~/Scripts/axios.js",
+                });
 
             // Use the Development version of Modernizr to develop with and learn from. Then, when you’re
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                            "~/Scripts/modernizr-*"));
+            //bundles.Add(new ScriptBundle("~/bundles/modernizr").Include("~/Scripts/modernizr-*"));
         }
     }
 }
