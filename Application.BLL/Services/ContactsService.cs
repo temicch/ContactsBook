@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Application.DAL.Entity;
 using Application.DAL.Repository;
 
 namespace Application.BLL.Services
 {
-    class ContactsService: IContactsService
+    public class ContactsService: IContactsService
     {
         public IContactRepository ContactRepository { get; }
 
@@ -12,39 +13,44 @@ namespace Application.BLL.Services
         {
             ContactRepository = contactRepository;
         }
-        public int AddContact(IContact contact)
+        public async Task<int> AddContactAsync(IContact contact)
         {
-            return ContactRepository.AddContact(contact);
+            return await ContactRepository.AddContactAsync(contact);
         }
 
-        public bool RemoveContactById(int id)
+        public async Task<bool> RemoveContactByIdAsync(int id)
         {
-            return ContactRepository.RemoveContactById(id);
+            return await ContactRepository.RemoveContactByIdAsync(id);
         }
 
-        public bool UpdateContact(IContact contact)
+        public async Task<bool> UpdateContactAsync(int id, IContact contact)
         {
-            return ContactRepository.UpdateContact(contact);
+            return await ContactRepository.UpdateContactAsync(id, contact);
         }
 
-        public IContact GetContactById(int id)
+        public async Task<IContact> GetContactByIdAsync(int id)
         {
-            return ContactRepository.GetContactById(id);
+            return await ContactRepository.GetContactByIdAsync(id);
         }
 
-        public IEnumerable<IContact> GetContactsByEmail(string email)
+        public async Task<IEnumerable<IContact>> GetContactsByEmailAsync(string email)
         {
-            return ContactRepository.GetContactsByEmail(email);
+            return await ContactRepository.GetContactsByEmailAsync(email);
         }
 
-        public IEnumerable<IContact> GetContactsByPhoneNumber(string phoneNumber)
+        public async Task<IEnumerable<IContact>> GetContactsByPhoneNumberAsync(string phoneNumber)
         {
-            return ContactRepository.GetContactsByPhoneNumber(phoneNumber);
+            return await ContactRepository.GetContactsByPhoneNumberAsync(phoneNumber);
         }
 
-        public IEnumerable<IContact> GetAllContacts()
+        public async Task<IEnumerable<IContact>> GetAllContactsAsync()
         {
-            return ContactRepository.GetAllContacts();
+            return await ContactRepository.GetAllContactsAsync();
+        }
+
+        public async Task<IEnumerable<IContact>> GetContactsByNameAsync(string name)
+        {
+            return await ContactRepository.GetContactsByNameAsync(name);
         }
     }
 }

@@ -6,12 +6,15 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Application.DAL.Repository
 {
     public class ContactRepository : IContactRepository
     {
         public IMapper Mapper { get; }
+        public ILogger<ContactRepository> Logger { get; }
 
         private readonly SqlConnection sqlConnection;
         public ContactRepository(string connectionString,
@@ -20,12 +23,12 @@ namespace Application.DAL.Repository
             Mapper = mapper;
             sqlConnection = new SqlConnection(connectionString);
         }
-        public int AddContact(IContact contact)
+        public async Task<int> AddContactAsync(IContact contact)
         {
             int contactId = 0;
             using (var transact = sqlConnection.BeginTransaction())
             {
-                sqlConnection.Open();
+                await sqlConnection.OpenAsync();
 
                 using (var command = sqlConnection.CreateCommand())
                 {
@@ -37,7 +40,7 @@ namespace Application.DAL.Repository
                     command.Parameters[0].Value = contact.Name;
                     command.Parameters[1].Value = contact.Email;
 
-                    contactId = Convert.ToInt32(command.ExecuteScalar());
+                    contactId = Convert.ToInt32(await command.ExecuteScalarAsync());
                 }
                 if(contact.PhoneNumbers.Any())
                     using (var command = sqlConnection.CreateCommand())
@@ -52,7 +55,7 @@ namespace Application.DAL.Repository
                             command.Parameters[0].Value = contact.Id;
                             command.Parameters[1].Value = number;
 
-                            command.ExecuteNonQuery();
+                            await command.ExecuteNonQueryAsync();
                         }
                     }
                 try
@@ -61,6 +64,7 @@ namespace Application.DAL.Repository
                 }
                 catch (Exception e)
                 {
+                    Logger.LogWarning(e, e.Message);
                     transact.Rollback();
                 }
                 sqlConnection.Close();
@@ -69,11 +73,11 @@ namespace Application.DAL.Repository
             return contactId;
         }
 
-        public bool RemoveContactById(int id)
+        public async Task<bool> RemoveContactByIdAsync(int id)
         {
             return true;
 
-            sqlConnection.Open();
+            await sqlConnection.OpenAsync();
 
             bool isRemoved = false;
 
@@ -84,51 +88,41 @@ namespace Application.DAL.Repository
                 command.Parameters.Add("@id", SqlDbType.Int);
                 command.Parameters[0].Value = id;
 
-                isRemoved = command.ExecuteNonQuery() > 0;
+                isRemoved = await command.ExecuteNonQueryAsync() > 0;
             }
             sqlConnection.Close();
             return isRemoved;
         }
 
-        public bool UpdateContact(IContact contact)
+        public async Task<bool> UpdateContactAsync(int id, IContact contact)
         {
             return true;
         }
 
-        public IContact GetContactById(int id)
+        public async Task<IContact> GetContactByIdAsync(int id)
         {
-            return StubContacts.FirstOrDefault();
-
             Contact contact = null;
-            sqlConnection.Open();
+            await sqlConnection.OpenAsync();
 
             using (var command = sqlConnection.CreateCommand())
             {
-                command.CommandText = "SELECT * FROM Contacts WHERE Id = @id";
+                command.CommandText = "select t1.Id, t1.Name, t1.Email, t2.Number from Contacts as t1 left join PhoneNumbers as t2 on t1.Id = t2.Contact_Id where t1.Id = @id";
                 command.Parameters.Add("@id", SqlDbType.Int);
                 command.Parameters[0].Value = id;
-                using (var reader = command.ExecuteReader())
+                using (var reader = await command.ExecuteReaderAsync())
                 {
                     if (reader.HasRows)
                     {
-                        reader.Read();
+                        await reader.ReadAsync();
                         contact = Mapper.Map<DbDataReader, Contact>(reader);
-                    }
-                }
-            }
-
-            if (contact != null)
-            {
-                using (var command = sqlConnection.CreateCommand())
-                {
-                    command.CommandText = "SELECT * FROM PhoneNumbers WHERE Contact_Id = @id";
-                    command.Parameters.Add("@id", SqlDbType.Int);
-                    command.Parameters[0].Value = id;
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while(reader.Read())
+                        var phoneNumber = reader.IsDBNull(3) ? null : (await reader.GetFieldValueAsync<string>(3)).Trim();
+                        if (!string.IsNullOrEmpty(phoneNumber))
+                            contact.PhoneNumbers.Add(phoneNumber);
+                        while (await reader.ReadAsync())
                         {
-                            contact.PhoneNumbers.Add(Convert.ToString(reader["Number"]));
+                            phoneNumber = reader.IsDBNull(3) ? null : (await reader.GetFieldValueAsync<string>(3)).Trim();
+                            if (!string.IsNullOrEmpty(phoneNumber))
+                                contact.PhoneNumbers.Add(phoneNumber);
                         }
                     }
                 }
@@ -137,17 +131,22 @@ namespace Application.DAL.Repository
             return contact;
         }
 
-        public IEnumerable<IContact> GetContactsByEmail(string email)
+        public async Task<IEnumerable<IContact>> GetContactsByEmailAsync(string email)
         {
             return StubContacts;
         }
 
-        public IEnumerable<IContact> GetContactsByPhoneNumber(string phoneNumber)
+        public async Task<IEnumerable<IContact>> GetContactsByPhoneNumberAsync(string phoneNumber)
         {
             return StubContacts;
         }
 
-        public IEnumerable<IContact> GetAllContacts()
+        public async Task<IEnumerable<IContact>> GetAllContactsAsync()
+        {
+            return StubContacts;
+        }
+
+        public async Task<IEnumerable<IContact>> GetContactsByNameAsync(string name)
         {
             return StubContacts;
         }

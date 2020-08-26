@@ -4,27 +4,34 @@
     <div class="row">
         <div class="col s12">
             <div id="main" class="card">
-                <div class="card-content">
-                    <span class="card-title">Task List</span>
-                    <div class="row">
-                        <form id="task-form">
-                            <div class="input-field col s12">
-                                <input type="text" name="task" id="task">
-                                <label for="task">New Task</label>
-                            </div>
-                            <input type="submit" value="Add Task" class="btn">
-                        </form>
-                    </div>
-                </div>
                 <div class="card-action">
-                    <h5 id="task-title">Tasks</h5>
-                    <div class="input-field col s12">
-                        <input type="text" name="filter" id="filter">
-                        <label for="filter">Filter</label>
+                    <h5 id="task-title">Contacts</h5>
+                    <div v-if="loading" class="preloader-wrapper big active center ">
+                        <div class="spinner-layer spinner-blue-only">
+                          <div class="circle-clipper left">
+                            <div class="circle"></div>
+                          </div><div class="gap-patch">
+                            <div class="circle"></div>
+                          </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                          </div>
+                        </div>
                     </div>
-                    <ul class="collection"></ul>
-                    <a href="#" class="btn black">Clear</a>
-                    <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+                    <div v-else-if="contacts.length">
+                        <div v-for="(contact, idx) of contacts" :key="contact.id">
+                            <div class="card-content ">
+                                <span class="card-title">{{contact.Name}}</span>
+                                <p>{{ contact.Email }}</p>
+                            </div>
+                            <div class="card-action">
+                                <a class="btn-floating waves-effect waves-light red"><i class="material-icons">edit</i></a>
+                                <a class="btn-floating waves-effect waves-light red"><i class="material-icons">delete</i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="center" v-else>
+                      There is no contacts
+                    </p>
                 </div>
             </div>
         </div>

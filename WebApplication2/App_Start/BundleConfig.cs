@@ -30,26 +30,39 @@ namespace WebApplication2
                 "~/Scripts/WebForms/MsAjax/MicrosoftAjaxWebForms.js"));
 
             ScriptManager.ScriptResourceMapping.AddDefinition(
+                "vuelidate",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/node_modules/vuelidate/dist/vuelidate.min.js",
+                    DebugPath = "~/node_modules/vuelidate/dist/vuelidate.min.js",
+                });
+            ScriptManager.ScriptResourceMapping.AddDefinition(
                 "materialize",
                 new ScriptResourceDefinition
                 {
-                    Path = "~/Scripts/materialize.min.js",
-                    DebugPath = "~/Scripts/materialize.js",
+                    Path = "~/node_modules/materialize-css/dist/js/materialize.min.js",
+                    DebugPath = "~/node_modules/materialize-css/dist/js/materialize.js",
                 });
             ScriptManager.ScriptResourceMapping.AddDefinition(
                 "vue",
                 new ScriptResourceDefinition
                 {
-                    Path = "~/Scripts/vue.min.js",
-                    DebugPath = "~/Scripts/vue.js",
+                    Path = "~/node_modules/vue/dist/vue.min.js",
+                    DebugPath = "~/node_modules/vue/dist/vue.js",
                 });
             ScriptManager.ScriptResourceMapping.AddDefinition(
                 "axios",
                 new ScriptResourceDefinition
                 {
-                    Path = "~/Scripts/axios.min.js",
-                    DebugPath = "~/Scripts/axios.js",
+                    Path = "~/node_modules/axios/dist/axios.min.js",
+                    DebugPath = "~/node_modules/axios/dist/axios.js",
                 });
+
+            //ScriptManager.ScriptResourceMapping.AddDefinition("myscripts", new ScriptResourceDefinition
+            //{
+            //    Path = "~/Scripts/dist/main.build.min.js",
+            //    DebugPath = "~/Scripts/dist/main.build.js"
+            //});
 
             // Use the Development version of Modernizr to develop with and learn from. Then, when you’re
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need

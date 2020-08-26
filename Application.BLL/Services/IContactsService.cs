@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Application.DAL.Entity;
 
 namespace Application.BLL.Services
@@ -10,42 +11,48 @@ namespace Application.BLL.Services
         /// </summary>
         /// <param name="contact">Contact</param>
         /// <returns>Id of added entity</returns>
-        int AddContact(IContact contact);
+        Task<int> AddContactAsync(IContact contact);
         /// <summary>
         /// Remove contact by id
         /// </summary>
         /// <param name="id">Contact id</param>
         /// <returns>True if success, false otherwise</returns>
-        bool RemoveContactById(int id);
+        Task<bool> RemoveContactByIdAsync(int id);
         /// <summary>
         /// Update contact
         /// </summary>
+        /// <param name="id">Contact id</param>
         /// <param name="contact">Contact</param>
         /// <returns>True if success, false otherwise</returns>
-        bool UpdateContact(IContact contact);
+        Task<bool> UpdateContactAsync(int id, IContact contact);
         /// <summary>
         /// Get contact by id
         /// </summary>
         /// <param name="id">Contact</param>
         /// <returns>Contact entity if such exists, null otherwise</returns>
-        IContact GetContactById(int id);
+        Task<IContact> GetContactByIdAsync(int id);
         /// <summary>
         /// Get contacts by the specified email. This method searches among partial matches by email.
         /// </summary>
         /// <param name="email">Partially specified email</param>
         /// <returns></returns>
-        IEnumerable<IContact> GetContactsByEmail(string email);
+        Task<IEnumerable<IContact>> GetContactsByEmailAsync(string email);
         /// <summary>
         /// Get contacts by the specified phone number. This method searches among partial matches by phone number.
         /// </summary>
         /// <param name="phoneNumber"></param>
         /// <returns></returns>
-        IEnumerable<IContact> GetContactsByPhoneNumber(string phoneNumber);
+        Task<IEnumerable<IContact>> GetContactsByPhoneNumberAsync(string phoneNumber);
         /// <summary>
         /// Get all contacts
         /// </summary>
         /// <returns>Contacts</returns>
-        IEnumerable<IContact> GetAllContacts();
-
+        Task<IEnumerable<IContact>> GetAllContactsAsync();
+        /// <summary>
+        /// Get contacts by the specified person name. This method searches among partial matches by person name.
+        /// </summary>
+        /// <param name="name">Person name</param>
+        /// <returns></returns>
+        Task<IEnumerable<IContact>> GetContactsByNameAsync(string name);
     }
 }

@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "type": "module",
+  "private": true,
+  "devDependencies": {},
+  "dependencies": {
+    "axios": "^0.20.0",
+    "materialize": "^1.0.0",
+    "materialize-css": "^1.0.0",
+    "vue": "^2.6.12",
+    "vuelidate": "^0.7.5"
+  }
+}

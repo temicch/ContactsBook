@@ -10,7 +10,7 @@
 
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link href="Content/materialize.css" rel="stylesheet" type="text/css"/>
+    <link href="~/node_modules/materialize-css/dist/css/materialize.min.css" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
@@ -27,9 +27,12 @@
                 <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
+                
+                <asp:ScriptReference Name="vuelidate" />
                 <asp:ScriptReference Name="materialize" />
                 <asp:ScriptReference Name="vue" />
                 <asp:ScriptReference Name="axios" />
+                
             </Scripts>
         </asp:ScriptManager>
     </form>
@@ -37,7 +40,5 @@
         <asp:ContentPlaceHolder ID="MainContent" runat="server">
         </asp:ContentPlaceHolder>
     </div>
-
 </body>
-
 </html>
