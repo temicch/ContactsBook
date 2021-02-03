@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Optimization;
-using System.Web.UI;
+﻿using System.Web.Optimization;
 
 namespace WebApplication2
 {
@@ -12,51 +7,29 @@ namespace WebApplication2
         // For more information on Bundling, visit https://go.microsoft.com/fwlink/?LinkID=303951
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/WebFormsJs").Include(
-                            "~/Scripts/WebForms/WebForms.js",
-                            "~/Scripts/WebForms/WebUIValidation.js",
-                            "~/Scripts/WebForms/MenuStandards.js",
-                            "~/Scripts/WebForms/Focus.js",
-                            "~/Scripts/WebForms/GridView.js",
-                            "~/Scripts/WebForms/DetailsView.js",
-                            "~/Scripts/WebForms/TreeView.js",
-                            "~/Scripts/WebForms/WebParts.js"));
+            // ScriptManager.ScriptResourceMapping
+            //     .AddDefinition("myscripts", new ScriptResourceDefinition
+            //     {
+            //         Path = "~/wwwroot/dist/js/main.min.js",
+            //         DebugPath = "~/wwwroot/dist/js/main.js"
+            //     });
+
+            //bundles.Add(new ScriptBundle("~/bundles/WebFormsJs").Include(
+            //                "~/Scripts/WebForms/WebForms.js",
+            //                "~/Scripts/WebForms/WebUIValidation.js",
+            //                "~/Scripts/WebForms/MenuStandards.js",
+            //                "~/Scripts/WebForms/Focus.js",
+            //                "~/Scripts/WebForms/GridView.js",
+            //                "~/Scripts/WebForms/DetailsView.js",
+            //                "~/Scripts/WebForms/TreeView.js",
+            //                "~/Scripts/WebForms/WebParts.js"));
 
             // Order is very important for these files to work, they have explicit dependencies
-            bundles.Add(new ScriptBundle("~/bundles/MsAjaxJs").Include(
-                "~/Scripts/WebForms/MsAjax/MicrosoftAjax.js",
-                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxApplicationServices.js",
-                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxTimer.js",
-                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxWebForms.js"));
-
-            ScriptManager.ScriptResourceMapping.AddDefinition(
-                "vuelidate",
-                new ScriptResourceDefinition
-                {
-                    Path = "~/node_modules/vuelidate/dist/vuelidate.min.js",
-                    DebugPath = "~/node_modules/vuelidate/dist/vuelidate.min.js",
-                });
-            ScriptManager.ScriptResourceMapping.AddDefinition(
-                "materialize",
-                new ScriptResourceDefinition
-                {
-                    Path = "~/node_modules/materialize-css/dist/js/materialize.min.js",
-                    DebugPath = "~/node_modules/materialize-css/dist/js/materialize.js",
-                });
-            ScriptManager.ScriptResourceMapping.AddDefinition(
-                "vue",
-                new ScriptResourceDefinition
-                {
-                    Path = "~/node_modules/vue/dist/vue.min.js",
-                    DebugPath = "~/node_modules/vue/dist/vue.js",
-                });
-            ScriptManager.ScriptResourceMapping.AddDefinition(
-                "axios",
-                new ScriptResourceDefinition
-                {
-                    Path = "~/node_modules/axios/dist/axios.min.js",
-                    DebugPath = "~/node_modules/axios/dist/axios.js",
-                });
+            //bundles.Add(new ScriptBundle("~/bundles/MsAjaxJs").Include(
+            //    "~/Scripts/WebForms/MsAjax/MicrosoftAjax.js",
+            //    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxApplicationServices.js",
+            //    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxTimer.js",
+            //    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxWebForms.js"));
 
             //ScriptManager.ScriptResourceMapping.AddDefinition("myscripts", new ScriptResourceDefinition
             //{

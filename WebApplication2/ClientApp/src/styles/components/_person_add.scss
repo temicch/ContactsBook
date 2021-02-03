@@ -1,0 +1,30 @@
+.person_add {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+
+    background: rgb(255, 255, 255);
+    opacity: 0.88;
+
+    width: 60px;
+    height: 60px;
+
+    cursor: pointer;
+
+    bottom: 24px;
+    right: 24px;
+
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 10px;
+    border-radius: 12px;
+
+    a {
+        font-size: 32px;
+        text-decoration: none;
+        color: $steel_gray_300;
+    }
+
+    &:hover a {
+        color: $steel_gray_540;
+    }
+}

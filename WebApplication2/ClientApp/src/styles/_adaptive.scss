@@ -1,0 +1,49 @@
+@media (max-width: 375px) {
+    .contact {
+        &__top {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        &__right_side {
+            justify-content: space-between;
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .person_add {
+        border-radius: 0;
+        opacity: 1;
+        position: sticky;
+        width: 100%;
+        height: $header_height;
+    }
+
+    .wrapper {
+        max-width: inherit;
+        height: 100vh;
+        overflow: auto;
+        padding: inherit;
+
+        &__middle {
+            padding-top: $header_height;
+        }
+
+        &__bottom {
+            position: sticky;
+            bottom: 0;
+        }
+    }
+
+    .contact {
+        &__remove {
+            visibility: visible;
+            border: 1px black solid;
+            padding: 10px;
+            background-size: 50%;
+            background-position: center;
+            border-radius: 50%;
+        }
+    }
+}

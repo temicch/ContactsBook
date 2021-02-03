@@ -1,4 +1,4 @@
-﻿using Application.DAL.Entity;
+using Application.DAL.Entity;
 using AutoMapper;
 using AutoMapper.Data;
 using System;
@@ -28,7 +28,7 @@ namespace WebApplication2
             
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            // BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
         private static ContainerProvider CreateContainer()
