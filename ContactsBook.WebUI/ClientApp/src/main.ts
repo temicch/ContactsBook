@@ -1,59 +1,21 @@
 ﻿import Vue from 'vue';
-import Vuex from 'vuex'
 /// @ts-ignore
 import Avatar from 'vue-avatar';
-import axios, { AxiosResponse } from 'axios';
-import VueFinalModal from 'vue-final-modal'
+import VueFinalModal from 'vue-final-modal';
 import 'normalize.css';
 
-import './styles/index.scss';
+import '@/styles/index.scss';
+import { Contact } from 'api/types';
+import store from '@/store';
+import { ContactsModule } from '@/store/modules/contacts';
 
-Vue.use(VueFinalModal())
-Vue.use(Vuex)
-
-const store = new Vuex.Store({
-    state: {
-      contacts: []
-    },
-    mutations: {
-      increment (state) {
-        
-      }
-    }
-  })
-
-interface GetContactsResponse
-{
-    response: PaginatedList<Contact>;
-}
-
-interface PaginatedList<Type>
-{
-    items: Type[],
-    pageIndex: number,
-    pageSize: number,
-    totalCount: number,
-    totalPages: number,
-    hasPreviousPage: boolean,
-    hasNextPage: boolean
-}
-
-interface Contact 
-{
-    id: string,
-    name: string,
-    phoneNumber: number,
-    email?: string
-}
+Vue.use(VueFinalModal());
 
 new Vue({
     el: "#main",
     store,
     data() {
         return {
-            loading: true,
-            contacts: Array<Contact>(),
-            modalPlugin: null,
             showModal: false,
         }
     },
@@ -61,20 +23,11 @@ new Vue({
         Avatar,
     },
     async mounted() {
-        await axios.get('http://localhost:56544/api/Contacts')
-            .then(response => {
-                const data: GetContactsResponse = response.data;
-                this.contacts = data.response.items;
-            })
-            .finally(() =>
-                this.loading = false);
-        this.loading = false
+        ContactsModule.LoadContacts();
     },
     methods: {
-        async removeContact(contactId: number)
-        {
-            console.log(contactId);
-            // await axios.delete('/api/contacts', {id: value.Id});
+        async removeContact(contactId: string) {
+            // await ContactsModule.RemoveContact(contactId);
         }
     },
     filters: {
@@ -85,9 +38,13 @@ new Vue({
             return phoneNumber;
         }
     },
-    destroyed() {
-        // if (this.modalPlugin && this.modalPlugin.destroy) {
-        //   this.modalPlugin.destroy()
-        // }
+    computed: {
+        loading(): boolean {
+            return ContactsModule.isLoading;
+        },
+        contacts(): Contact[] {
+            return ContactsModule.contacts;
+        }
     }
 });
+
