@@ -342,3 +342,5 @@ healthchecksdb
 /WebApplication2/ClientApp/dist
 .vscode/launch.json
 .vscode/tasks.json
+
+ContactsBook.WebUI/ClientApp/dist/

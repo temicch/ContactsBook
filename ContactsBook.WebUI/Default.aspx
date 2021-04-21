@@ -42,7 +42,7 @@
                                         <span class="contact__phone">
                                             {{ contact.phoneNumber | phoneNumber }}
                                         </span>
-                                        <button type="button" v-on:click="console.log('click')" class="contact__remove"></button>
+                                        <button type="button" v-on:click="removeContact(contact.id)" class="contact__remove"></button>
                                     </div>
                                 </div>
                                 <div class="contact__bottom">
