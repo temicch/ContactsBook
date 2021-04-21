@@ -1,4 +1,3 @@
-// webpack.config.js
 const path = require("path");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
@@ -15,8 +14,10 @@ let config = {
     resolve: {
       alias: {
         // Ensure the right Vue build is used
-        'vue$': 'vue/dist/vue.esm.js'
-        }   
+        'vue$': 'vue/dist/vue.esm.js',
+        '@': path.resolve(__dirname, 'ClientApp/src'),
+        },
+        extensions: ['.ts', '.js', '.json']
     },
     optimization: {
       minimize: true,
@@ -74,9 +75,7 @@ let config = {
 module.exports = (env, argv) => {
     if(argv.mode == 'development') {
         config.devtool = 'inline-source-map';
+        config.optimization.minimize = false;
     } 
-    //else {
-    //     config.devtool = 'source-map';
-    // }
     return config;
 };

@@ -1,18 +1,38 @@
 {
   "compilerOptions": {
-    "noImplicitAny": true,
-    "noEmitOnError": true,
-    "removeComments": false,
-    "sourceMap": true,
+    "target": "esnext",
+    "module": "esnext",
     "strict": true,
-    "target": "es5",
-    "module": "es2015",
-    "moduleResolution": "node"    
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": "./ClientApp/src/",
+    "types": [
+      "node",
+      "webpack-env"
+    ],
+    "paths": {
+      "@/*": [
+        "*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ],
   },
+  "include": [
+    "ClientApp/src/**/*.ts",
+    "ClientApp/src/**/*.tsx",
+    "ClientApp/src/**/*.vue",
+  ],
   "exclude": [
     "node_modules"    
-  ],
-  "include": [
-    "ClientApp/src"
   ]
 }
