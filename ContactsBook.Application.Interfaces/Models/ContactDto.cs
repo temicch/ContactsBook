@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ContactsBook.Application.Models
+namespace ContactsBook.Application.Interfaces.Models
 {
     public class ContactDto
     {

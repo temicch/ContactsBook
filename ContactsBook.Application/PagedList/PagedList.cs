@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using ContactsBook.Application.Interfaces.PagedList;
 
-namespace ContactsBook.Application
+namespace ContactsBook.Application.PagedList
 {
     [Serializable]
-    public class PagedList<T>: IPagedList<T>
+    public class PagedList<T> : IPagedList<T>
     {
         public PagedList()
         {
-
         }
 
-        public PagedList(IEnumerable<T> source, LimitationParameters limitationParameters, int totalCount)
+        public PagedList(IEnumerable<T> source, ILimitationParameters limitationParameters, int totalCount)
         {
             PageIndex = limitationParameters.PageIndex;
 

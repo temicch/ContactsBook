@@ -1,143 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
-using AutoMapper;
-using ContactsBook.Application;
-using ContactsBook.DataAccess.MsSql.Repository.Helpers;
+using ContactsBook.Application.Interfaces.PagedList;
+using ContactsBook.DataAccess.MsSql.Extensions;
 using ContactsBook.Domain.Entities;
-using static ContactsBook.DataAccess.MsSql.Repository.Helpers.ContactRepositoryHelpers;
+using ContactsBook.Infrastructure.Interfaces.Repository;
+using ContactsBook.Infrastructure.Interfaces.SelectResult;
 
 namespace ContactsBook.DataAccess.MsSql.Repository
 {
-    public class ContactRepository : IContactRepository<Contact>, IDisposable
+    public class ContactRepository : IContactRepository<Contact>
     {
-        private readonly string _connectionString;
-        private readonly IMapper _mapper;
-        private readonly SqlConnection _sqlConnection;
-        private readonly string _tableName;
+        private readonly ContactsDbContext _dbContext;
 
-        public ContactRepository(string connectionString, IMapper mapper, string tableName = "Contacts")
+        public ContactRepository(ContactsDbContext dbContext)
         {
-            _connectionString = connectionString;
-            _mapper = mapper;
-            _sqlConnection = new SqlConnection(connectionString);
-            _tableName = tableName;
-
-            //var q = new SeedData(new Bogus.Faker<Contact>()).Seed().SeedContacts;
-            //AddRangeContactsAsync(q);
+            _dbContext = dbContext;
         }
 
         public async Task<Guid> InsertAsync(Contact contact)
         {
-            try
-            {
-                await _sqlConnection.OpenAsync();
-                {
-                    var contactId = await InsertContactAsync(_sqlConnection, contact);
-                    contact.Id = contactId;
+            if (await _dbContext.IsPhoneNumberExistAsync(contact.PhoneNumber.Value.ToString()))
+                return default;
 
-                    return contactId;
-                }
-            }
-            finally
-            {
-                _sqlConnection.Close();
-            }
+            return await _dbContext.InsertAsync(contact);
         }
+
         public async Task InsertAsync(IEnumerable<Contact> contacts)
         {
-            await InsertContactsAsync(_connectionString, _tableName, contacts);
+            await _dbContext.InsertAsync(contacts);
         }
 
         public async Task<bool> DeleteByIdAsync(Guid id)
         {
-            try
-            {
-                await _sqlConnection.OpenAsync();
-
-                return await RemoveContactAsync(_sqlConnection, id);
-            }
-            finally
-            {
-                _sqlConnection.Close();
-            }
+            return await _dbContext.DeleteByIdAsync(id);
         }
 
         public async Task<bool> UpdateAsync(Contact contact)
         {
-            try
-            {
-                await _sqlConnection.OpenAsync();
-                var contactId = await ContactRepositoryHelpers.UpdateContactAsync(_sqlConnection, contact);
-
-                return contactId != default(Guid);
-            }
-            finally
-            {
-                _sqlConnection.Close();
-            }
+            return await _dbContext.UpdateAsync(contact);
         }
 
         public async Task<Contact> GetByIdAsync(Guid id)
         {
-            try
-            {
-                await _sqlConnection.OpenAsync();
-                return await SelectContactAsync(_sqlConnection, _mapper, id);
-            }
-            finally
-            {
-                _sqlConnection.Close();
-            }
+            return await _dbContext.GetByIdAsync(id);
         }
 
-        public async Task<SelectResult<Contact>> GetAsync(LimitationParameters limitationParameters)
+        public async Task<ISelectResult<Contact>> GetAsync(ILimitationParameters limitationParameters)
         {
-            try
-            {
-                await _sqlConnection.OpenAsync();
-
-                return await SelectAllContactsAsync(_sqlConnection, _mapper, limitationParameters);
-            }
-            finally
-            {
-                _sqlConnection.Close();
-            }
+            return await _dbContext.GetAsync(limitationParameters);
         }
 
-        public async Task<SelectResult<Contact>> GetByPhoneNumberAsync(string phoneNumber, LimitationParameters limitationParameters)
+        public async Task<ISelectResult<Contact>> GetByPhoneNumberAsync(string phoneNumber,
+            ILimitationParameters limitationParameters)
         {
-            try
-            {
-                await _sqlConnection.OpenAsync();
-
-                return await SelectPhoneContactsAsync(_sqlConnection, _mapper, phoneNumber, limitationParameters);
-            }
-            finally
-            {
-                _sqlConnection.Close();
-            }
+            return await _dbContext.GetByPhoneNumberAsync(phoneNumber, limitationParameters);
         }
 
-        public async Task<SelectResult<Contact>> GetByNameAsync(string name, LimitationParameters limitationParameters)
+        public async Task<ISelectResult<Contact>> GetByNameAsync(string name,
+            ILimitationParameters limitationParameters)
         {
-            try
-            {
-                await _sqlConnection.OpenAsync();
-
-                return await SelectNameContactsAsync(_sqlConnection, _mapper, name, limitationParameters);
-            }
-            finally
-            {
-                _sqlConnection.Close();
-            }
+            return await _dbContext.GetByNameAsync(name, limitationParameters);
         }
-
-        public void Dispose()
-        {
-            _sqlConnection.Dispose();
-        }
-
     }
 }

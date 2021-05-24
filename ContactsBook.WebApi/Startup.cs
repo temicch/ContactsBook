@@ -1,18 +1,22 @@
-using AutoMapper;
+using System.Reflection;
+using Bogus;
 using ContactsBook.Application;
+using ContactsBook.Application.Interfaces.Services;
 using ContactsBook.Application.Services;
+using ContactsBook.DataAccess.MsSql;
+using ContactsBook.DataAccess.MsSql.Repository;
 using ContactsBook.Domain.Entities;
+using ContactsBook.Infrastructure.Interfaces;
+using ContactsBook.Infrastructure.Interfaces.Repository;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
-using ContactsBook.DataAccess.MsSql;
-using ContactsBook.DataAccess.MsSql.Repository;
 
 namespace ContactsBook.WebApi
 {
@@ -25,15 +29,14 @@ namespace ContactsBook.WebApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
             });
 
             services.AddControllers()
@@ -41,20 +44,23 @@ namespace ContactsBook.WebApi
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ContactsBook.WebApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "ContactsBook.WebApi", Version = "v1"});
             });
 
-            services.AddScoped<IContactRepository<Contact>>(x => new ContactRepository(Configuration.GetConnectionString("DefaultConnection"), x.GetRequiredService<IMapper>()));
+            services.AddDbContext<ContactsDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IContactRepository<Contact>, ContactRepository>();
 
             services.AddTransient<IContactsService, ContactsService>();
+            services.AddTransient<IFakeDataGenerator<Contact>, ContactsSeed>();
+            services.AddTransient<Faker<Contact>>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-            services.AddAutoMapper(typeof(DataAccessMapping), typeof(ApplicationMapping), typeof(WebApiMapping));
-
+            services.AddAutoMapper(typeof(ApplicationMapping), typeof(WebApiMapping));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -72,10 +78,7 @@ namespace ContactsBook.WebApi
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

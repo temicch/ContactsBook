@@ -1,5 +1,5 @@
-﻿using ContactsBook.Application;
-using ContactsBook.Application.Models;
+﻿using ContactsBook.Application.Interfaces.Models;
+using ContactsBook.Application.PagedList;
 
 namespace ContactsBook.WebApi.Models.Contact
 {

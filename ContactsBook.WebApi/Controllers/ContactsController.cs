@@ -1,11 +1,11 @@
-﻿using AutoMapper;
-using ContactsBook.Application;
-using ContactsBook.Application.Models;
-using ContactsBook.Application.Services;
+﻿using System;
+using System.Threading.Tasks;
+using AutoMapper;
+using ContactsBook.Application.Interfaces.Models;
+using ContactsBook.Application.Interfaces.Services;
+using ContactsBook.Application.PagedList;
 using ContactsBook.WebApi.Models.Contact;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 
 namespace ContactsBook.WebApi.Controllers
 {
@@ -23,9 +23,10 @@ namespace ContactsBook.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<GetContactsResponse>> Get([FromQuery]GetContactsRequest request)
+        public async Task<ActionResult<GetContactsResponse>> Get([FromQuery] GetContactsRequest request)
         {
-            var contacts = await _contactsService.GetContactsAsync(new LimitationParameters(request.PageSize, request.PageIndex), request.PhoneNumber, request.Name);
+            var contacts = await _contactsService.GetContactsAsync(
+                new LimitationParameters(request.PageSize, request.PageIndex), request.PhoneNumber, request.Name);
 
             var mapping = _mapper.Map<GetContactsResponse>(contacts);
 
@@ -52,10 +53,10 @@ namespace ContactsBook.WebApi.Controllers
 
             var result = await _contactsService.AddContactAsync(mapping);
 
-            if (result == default(Guid))
+            if (result == default)
                 return BadRequest();
 
-            var mapped = new CreateContactResponse() { Id = result };
+            var mapped = new CreateContactResponse {Id = result};
 
             return Ok(mapped);
         }
@@ -63,10 +64,7 @@ namespace ContactsBook.WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<StatusCodeResult> Put(Guid id, UpdateContactRequest request)
         {
-            if (id != request.Id)
-            {
-                return BadRequest();
-            }
+            if (id != request.Id) return BadRequest();
 
             var mapped = _mapper.Map<ContactDto>(request);
 
@@ -89,5 +87,4 @@ namespace ContactsBook.WebApi.Controllers
             return NoContent();
         }
     }
-
 }

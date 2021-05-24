@@ -1,9 +1,13 @@
-﻿using AutoMapper;
-using ContactsBook.Application.Models;
-using ContactsBook.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
+using ContactsBook.Application.Interfaces.Models;
+using ContactsBook.Application.Interfaces.PagedList;
+using ContactsBook.Application.Interfaces.Services;
+using ContactsBook.Application.PagedList;
+using ContactsBook.Domain.Entities;
+using ContactsBook.Infrastructure.Interfaces.Repository;
 
 namespace ContactsBook.Application.Services
 {
@@ -38,39 +42,47 @@ namespace ContactsBook.Application.Services
             return _mapper.Map<ContactDto>(await _contactRepository.GetByIdAsync(id));
         }
 
-        public async Task<PagedList<ContactDto>> GetContactsByPhoneNumberAsync(string phoneNumber, LimitationParameters limitationParameters)
+        public async Task<IPagedList<ContactDto>> GetContactsByPhoneNumberAsync(string phoneNumber,
+            ILimitationParameters limitationParameters)
         {
             var result = await _contactRepository.GetByPhoneNumberAsync(phoneNumber, limitationParameters);
 
-            var paginatedList = new PagedList<ContactDto>(_mapper.Map<List<ContactDto>>(result.Items), limitationParameters, result.TotalCount);
+            var paginatedList = new PagedList<ContactDto>(_mapper.Map<List<ContactDto>>(result.Items),
+                limitationParameters, result.TotalCount);
 
             return paginatedList;
         }
 
-        public async Task<PagedList<ContactDto>> GetContactsAsync(LimitationParameters limitationParameters)
+        public async Task<IPagedList<ContactDto>> GetContactsAsync(ILimitationParameters limitationParameters)
         {
             var result = await _contactRepository.GetAsync(limitationParameters);
 
-            var paginatedList = new PagedList<ContactDto>(_mapper.Map<List<ContactDto>>(result.Items), limitationParameters, result.TotalCount);
+            var paginatedList = new PagedList<ContactDto>(_mapper.Map<List<ContactDto>>(result.Items),
+                limitationParameters, result.TotalCount);
 
             return paginatedList;
         }
 
-        public async Task<PagedList<ContactDto>> GetContactsByNameAsync(string name, LimitationParameters limitationParameters)
+        public async Task<IPagedList<ContactDto>> GetContactsByNameAsync(string name,
+            ILimitationParameters limitationParameters)
         {
             var result = await _contactRepository.GetByNameAsync(name, limitationParameters);
 
-            var paginatedList = new PagedList<ContactDto>(_mapper.Map<List<ContactDto>>(result.Items), limitationParameters, result.TotalCount);
+            var paginatedList = new PagedList<ContactDto>(_mapper.Map<List<ContactDto>>(result.Items),
+                limitationParameters, result.TotalCount);
 
             return paginatedList;
         }
 
-        public async Task<PagedList<ContactDto>> GetContactsAsync(LimitationParameters limitationParameters, string phoneNumber = null, string name = null)
+        public async Task<IPagedList<ContactDto>> GetContactsAsync(ILimitationParameters limitationParameters,
+            string phoneNumber = null, string name = null)
         {
             if (phoneNumber != null)
                 return await GetContactsByPhoneNumberAsync(phoneNumber, limitationParameters);
-            else if (name != null)
+
+            if (name != null)
                 return await GetContactsByNameAsync(name, limitationParameters);
+
             return await GetContactsAsync(limitationParameters);
         }
     }

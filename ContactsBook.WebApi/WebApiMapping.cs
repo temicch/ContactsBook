@@ -1,6 +1,6 @@
 using AutoMapper;
-using ContactsBook.Application;
-using ContactsBook.Application.Models;
+using ContactsBook.Application.Interfaces.Models;
+using ContactsBook.Application.PagedList;
 using ContactsBook.WebApi.Models.Contact;
 
 namespace ContactsBook.WebApi
@@ -14,7 +14,7 @@ namespace ContactsBook.WebApi
             CreateMap<ContactDto, GetContactResponse>()
                 .ForMember(dest => dest.Response, src => src.MapFrom(src => src));
             CreateMap<PagedList<ContactDto>, GetContactsResponse>()
-                .ForMember(dest => dest.Response, src => src.MapFrom(src => src)); 
+                .ForMember(dest => dest.Response, src => src.MapFrom(src => src));
         }
     }
 }
