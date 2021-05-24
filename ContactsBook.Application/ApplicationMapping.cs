@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ContactsBook.Application.Models;
+using ContactsBook.Application.Interfaces.Models;
 using ContactsBook.Domain.Entities;
 using ContactsBook.Domain.ValueObjects;
 

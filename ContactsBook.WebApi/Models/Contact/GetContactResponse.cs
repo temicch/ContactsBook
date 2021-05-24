@@ -1,4 +1,4 @@
-﻿using ContactsBook.Application.Models;
+﻿using ContactsBook.Application.Interfaces.Models;
 
 namespace ContactsBook.WebApi.Models.Contact
 {

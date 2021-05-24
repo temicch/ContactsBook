@@ -1,6 +1,6 @@
-﻿@import 'fonts';
-@import 'variables';
-@import 'components';
+﻿@import "fonts";
+@import "variables";
+@import "components";
 
 html {
     font-size: 14px;
@@ -8,7 +8,7 @@ html {
 }
 
 body {
-    font-family: 'Ubuntu', sans-serif;
+    font-family: "Ubuntu", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: #edeef0;
@@ -43,41 +43,4 @@ body {
     }
 }
 
-// .modal-content {
-//     padding: 0px !important;
-// }
-
-// .modal {
-//     box-shadow: 0 2px 10px $black_alpha40 !important;
-
-//     background: white;
-//     border-radius: 4px;
-// }
-
-// .modal-content {
-//     padding: 6px 20px 5px !important;
-// }
-
-// .modal-title h2 {
-//     font-size: 16px;
-//     background: $steel_gray_10;
-//     margin: 0;
-//     padding: 0 20px;
-//     border-bottom: 1px solid $steel_gray_80;
-//     border-radius: 4px 4px 0 0;
-//     line-height: 54px;
-//     overflow-wrap: break-word;
-// }
-
-// .modal-footer {
-//     background-color: inherit !important;
-// }
-
-// .modal-footer a {
-//     text-transform: inherit;
-//     background-color: $light_blue;
-//     color: white;
-//     border-radius: 4px;
-// }
-
-@import 'adaptive';
+@import "adaptive";

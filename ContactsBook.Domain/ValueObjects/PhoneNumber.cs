@@ -1,21 +1,18 @@
-﻿using ContactsBook.Utils;
-using System;
+﻿using System;
+using ContactsBook.Utils;
 
 namespace ContactsBook.Domain.ValueObjects
 {
     public record PhoneNumber
     {
-
-        public long Value { get; init; }
-
         public PhoneNumber(long value)
         {
             if (!CommonHelper.IsValidPhoneNumber(value))
-            {
-                throw new Exception(string.Format("Phone number {0} is not valid", value));
-            }
+                throw new Exception($"Phone number {value} is not valid");
 
             Value = value;
         }
+
+        public long Value { get; init; }
     }
 }

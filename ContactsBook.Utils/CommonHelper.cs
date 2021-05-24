@@ -15,7 +15,7 @@ namespace ContactsBook.Utils
         }
 
         /// <summary>
-        /// Verifies that a string is in valid e-mail format
+        ///     Verifies that a string is in valid e-mail format
         /// </summary>
         /// <param name="email">Email to verify</param>
         /// <returns>true if the string is a valid e-mail address and false if it's not</returns>
@@ -29,11 +29,14 @@ namespace ContactsBook.Utils
             return _emailRegex.IsMatch(email);
         }
 
+        /// <summary>
+        ///     Verifies that a string is in valid phone number format
+        /// </summary>
+        /// <param name="email">Phone number to verify</param>
+        /// <returns>true if the string is a valid phone number and false if it's not</returns>
         public static bool IsValidPhoneNumber(long phoneNumber)
         {
-            if (phoneNumber < 10000000000 | phoneNumber > 99999999999)
-                return false;
-            return true;
+            return !((phoneNumber < 10000000000) | (phoneNumber > 99999999999));
         }
     }
 }

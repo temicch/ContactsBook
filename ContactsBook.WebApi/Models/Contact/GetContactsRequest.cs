@@ -1,5 +1,5 @@
-﻿using FluentValidation;
-using System.Linq;
+﻿using System.Linq;
+using FluentValidation;
 
 namespace ContactsBook.WebApi.Models.Contact
 {
@@ -11,7 +11,7 @@ namespace ContactsBook.WebApi.Models.Contact
         public int PageIndex { get; set; } = 0;
     }
 
-    public class GetContactsRequestValidator: AbstractValidator<GetContactsRequest>
+    public class GetContactsRequestValidator : AbstractValidator<GetContactsRequest>
     {
         public GetContactsRequestValidator()
         {
