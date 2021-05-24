@@ -16,8 +16,10 @@ namespace ContactsBook.WebApi.Models.Contact
             RuleFor(x => x.Name)
                 .NotNull()
                 .Length(3, 28);
+
             RuleFor(x => x.Email)
                 .EmailAddress();
+
             RuleFor(x => x.PhoneNumber)
                 .InclusiveBetween(10000000000, 99999999999);
         }

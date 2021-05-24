@@ -1,13 +1,13 @@
-﻿import Vue from 'vue';
+﻿import Vue from "vue";
 /// @ts-ignore
-import Avatar from 'vue-avatar';
-import VueFinalModal from 'vue-final-modal';
-import 'normalize.css';
+import Avatar from "vue-avatar";
+import VueFinalModal from "vue-final-modal";
+import "normalize.css";
 
-import '@/styles/index.scss';
-import { Contact } from 'api/types';
-import store from '@/store';
-import { ContactsModule } from '@/store/modules/contacts';
+import "@/styles/index.scss";
+import { Contact } from "api/types";
+import store from "@/store";
+import { ContactsModule } from "@/store/modules/contacts";
 
 Vue.use(VueFinalModal());
 
@@ -17,7 +17,7 @@ new Vue({
     data() {
         return {
             showModal: false,
-        }
+        };
     },
     components: {
         Avatar,
@@ -28,15 +28,18 @@ new Vue({
     methods: {
         async removeContact(contactId: string) {
             // await ContactsModule.RemoveContact(contactId);
-        }
+        },
     },
     filters: {
         phoneNumber: function (inputPhoneNumber: number) {
             let i = 0;
             let phoneNumber: string = inputPhoneNumber.toString();
-            phoneNumber = '+# (###) ### ## ##'.replace(/#/g, _ => phoneNumber[i++]);
+            phoneNumber = "+# (###) ### ## ##".replace(
+                /#/g,
+                (_) => phoneNumber[i++]
+            );
             return phoneNumber;
-        }
+        },
     },
     computed: {
         loading(): boolean {
@@ -44,7 +47,6 @@ new Vue({
         },
         contacts(): Contact[] {
             return ContactsModule.contacts;
-        }
-    }
+        },
+    },
 });
-
