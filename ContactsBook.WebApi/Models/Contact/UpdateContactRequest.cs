@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using ContactsBook.WebApi.Extensions;
 using FluentValidation;
 
 namespace ContactsBook.WebApi.Models.Contact
@@ -16,12 +17,14 @@ namespace ContactsBook.WebApi.Models.Contact
         public UpdateContactRequestValidator()
         {
             RuleFor(x => x.Name)
-                .NotNull()
-                .Length(3, 28);
+                .CbName();
+
             RuleFor(x => x.Email)
-                .EmailAddress();
+                .CbEmailAddress();
+
             RuleFor(x => x.PhoneNumber)
-                .InclusiveBetween(10000000000, 99999999999);
+                .Cascade(CascadeMode.Stop)
+                .CbPhoneNumber();
         }
     }
 }
