@@ -24,6 +24,9 @@ namespace ContactsBook.DataAccess.MsSql.Configurations
 
             builder.HasKey(p => p.Id);
 
+            builder.HasIndex(p => p.PhoneNumber)
+                .IsUnique();
+
             builder.Property(p => p.PhoneNumber)
                 .HasConversion(
                     value => value.Value,
@@ -41,7 +44,10 @@ namespace ContactsBook.DataAccess.MsSql.Configurations
                 .IsRequired()
                 .HasMaxLength(28);
 
-            builder.HasData(_contactsGenerator.Generate(CONTACTS_SEED_COUNT));
+            builder.HasIndex(p => p.Name)
+                .IsClustered(false);
+
+            //builder.HasData(_contactsGenerator.Generate(CONTACTS_SEED_COUNT));
         }
     }
 }
