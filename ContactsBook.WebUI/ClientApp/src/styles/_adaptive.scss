@@ -15,9 +15,10 @@
     .person_add {
         border-radius: 0;
         opacity: 1;
-        position: sticky;
+        position: static;
         width: 100%;
         height: $header_height;
+        padding: 16px;
     }
 
     .wrapper {
@@ -26,12 +27,19 @@
         overflow: auto;
         padding: inherit;
 
-        &__middle {
-            padding-top: $header_height;
+        &__top {
+            position: fixed;
+            width: 100%;
+        }
+
+        &__middle .infinity_list{
+            padding-top: 2 * $header_height;
+            padding-bottom: $header_height;
         }
 
         &__bottom {
-            position: sticky;
+            position: fixed;
+            width: 100%;
             bottom: 0;
         }
     }
@@ -40,10 +48,10 @@
         &__remove {
             visibility: visible;
             border: 1px black solid;
-            padding: 10px;
-            background-size: 50%;
-            background-position: center;
+            padding: 5px;
             border-radius: 50%;
+            width: 24px;
+            height: 24px;
         }
     }
 }

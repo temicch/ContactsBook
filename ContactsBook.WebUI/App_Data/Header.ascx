@@ -2,9 +2,9 @@
 
 <header class="header">
     <div class="header__content">
-        <div class="logo">
+        <a href="/" class="logo">
             <div class="logo__icon">C</div>
             <span class="logo__text">Contacts</span>
-        </div>
+        </a>
     </div>
 </header>

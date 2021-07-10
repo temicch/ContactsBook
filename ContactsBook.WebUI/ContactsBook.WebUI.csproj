@@ -80,7 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Header.ascx" />
-    <Content Include="App_Data\Loader.ascx" />
     <Content Include="ClientApp\dist\css.js" />
     <Content Include="ClientApp\dist\main.js" />
     <Content Include="Default.aspx" />
@@ -96,13 +95,6 @@
     </Compile>
     <Compile Include="App_Data\Header.ascx.designer.cs">
       <DependentUpon>Header.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="App_Data\Loader.ascx.cs">
-      <DependentUpon>Loader.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="App_Data\Loader.ascx.designer.cs">
-      <DependentUpon>Loader.ascx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />

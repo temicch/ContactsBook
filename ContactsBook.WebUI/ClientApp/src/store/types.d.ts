@@ -1,7 +1,8 @@
-import { Contact, PaginatedParams } from "@/api/types";
-
-export type ContactsState = {
+type ContactsState = {
     items: Contact[],
-    paginatedParams: Omit<PaginatedParams, "hasPreviousPage">,
+    paginatedParams: PaginatedParams,
     loading: boolean
 }
+type ContactsSearchState = ContactsState & {
+    searchPhrase: string
+};

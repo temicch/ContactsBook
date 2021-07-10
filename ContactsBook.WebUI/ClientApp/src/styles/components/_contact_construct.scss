@@ -2,6 +2,7 @@
     &__header {
         display: flex;
         align-items: center;
+        padding: 0 8px;
     }
     &__avatar {
         padding-right: 16px;
@@ -27,14 +28,16 @@
 
         &_group {
             display: flex;
-            padding: 4px 0;
+            flex-wrap: wrap;
 
             label {
-                flex-grow: 1;
+                flex: 1 1 0px;
 
-                + label {
-                    padding-left: 20px;
-                }
+                overflow: hidden;
+                min-width: 200px;
+
+                padding: 8px;
+                padding-bottom: 0;
 
                 h4 {
                     padding-top: 2px;
@@ -64,17 +67,31 @@
                     &:focus {
                         border-color: $light_blue;
                     }
+
+                    &:disabled {
+                        border-color: transparent;
+                        background: none;
+                    }
                 }
+            }
+
+            &__error {
+                display: block;
+                color: $error_color;
+                padding: 0 8px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
         }
         &_footer {
-            padding: 16px 0 0;
+            padding: 16px 8px 0;
         }
     }
     &__button {
         min-height: 36px;
         padding: 0 16px;
-        background: $lighten_blue;
+        background: $light_blue;
         color: white;
         border-radius: 8px;
         outline: 0;
@@ -86,6 +103,10 @@
 
         &:focus {
             opacity: 0.9;
+        }
+
+        &:hover {
+            opacity: 0.88;
         }
 
         &:disabled {

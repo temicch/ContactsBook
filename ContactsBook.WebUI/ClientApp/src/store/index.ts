@@ -1,12 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import { ContactsState } from "@/store/types";
-
 Vue.use(Vuex);
 
 export interface RootState {
     contacts: ContactsState;
+    contactsSearch: ContactsSearchState;
 }
 
 export default new Vuex.Store<RootState>({

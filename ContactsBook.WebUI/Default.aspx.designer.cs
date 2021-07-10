@@ -7,30 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ContactsBook.WebUI {
-    
-    
-    public partial class _Default {
-        
-        /// <summary>
-        /// Loader control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify, move the field declaration from the designer file to a code-behind file.
-        /// </remarks>
-        protected global::ContactsBook.WebUI.App_Data.Loader Loader;
-        
-        /// <summary>
-        /// Master property.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated property.
-        /// </remarks>
-        public new ContactsBook.WebUI.SiteMaster Master {
-            get {
-                return ((ContactsBook.WebUI.SiteMaster)(base.Master));
-            }
-        }
+namespace ContactsBook.WebUI
+{
+
+
+    public partial class _Default
+    {
     }
 }
