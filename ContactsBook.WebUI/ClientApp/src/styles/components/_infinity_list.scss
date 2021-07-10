@@ -1,0 +1,28 @@
+.infinity_list {
+  margin-top: 0;
+  padding-left: 0;
+  list-style: none;
+
+  &--none {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    color: grey;
+    text-transform: uppercase;
+    letter-spacing: 4;
+  }
+
+  &__loader {
+    overflow: hidden;
+    padding: 24px;
+  }
+
+  &__item:hover {
+    background: $steel_gray_20;
+  }
+
+  &__item:hover &__item_remove {
+    visibility: visible;
+  }
+}

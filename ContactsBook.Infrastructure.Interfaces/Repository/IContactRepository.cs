@@ -44,24 +44,38 @@ namespace ContactsBook.Infrastructure.Interfaces.Repository
         Task<TEntity> GetByIdAsync(Guid id);
 
         /// <summary>
+        ///     Get contact by phone number
+        /// </summary>
+        /// <param name="phoneNumber">Contact phone number</param>
+        /// <returns>Contact entity if such exists, null otherwise</returns>
+        Task<TEntity> GetByPhoneNumberAsync(string phoneNumber);
+
+        /// <summary>
         ///     Get contacts by the specified person name. This method searches among partial matches by person name.
         /// </summary>
         /// <param name="name">Partially specified name</param>
         /// <param name="limitationParameters">Parameters for limit select</param>
-        Task<ISelectResult<TEntity>> GetByNameAsync(string name, ILimitationParameters limitationParameters);
+        Task<ISelectResult<TEntity>> FindByNameAsync(string name, ILimitationParameters limitationParameters);
 
         /// <summary>
         ///     Get contacts by the specified phone number. This method searches among partial matches by phone number.
         /// </summary>
         /// <param name="phoneNumber"></param>
         /// <param name="limitationParameters">Parameters for limit select</param>
-        Task<ISelectResult<TEntity>> GetByPhoneNumberAsync(string phoneNumber,
+        Task<ISelectResult<TEntity>> FindByPhoneNumberAsync(string phoneNumber,
             ILimitationParameters limitationParameters);
 
         /// <summary>
         ///     Get all contacts with limit
         /// </summary>
         /// <param name="limitationParameters">Parameters for limit select</param>
-        Task<ISelectResult<TEntity>> GetAsync(ILimitationParameters limitationParameters);
+        Task<ISelectResult<TEntity>> GetAllAsync(ILimitationParameters limitationParameters);
+
+        /// <summary>
+        /// Check for unique phone number
+        /// </summary>
+        /// <param name="phoneNumber">Phone number</param>
+        /// <returns>True if such contact exists with phone number, false otherwise</returns>
+        Task<bool> IsPhoneNumberExistsAsync(string phoneNumber);
     }
 }

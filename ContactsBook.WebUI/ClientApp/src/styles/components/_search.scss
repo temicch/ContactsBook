@@ -1,22 +1,67 @@
 .search {
-    display: flex;
+  display: flex;
+  align-items: center;
+  height: 48px;
 
-    &__input {
-        flex-grow: 1;
-        height: 48px !important;
-        padding: 15px 10px 15px 26px !important;
-        box-sizing: border-box !important;
-        border: 0;
-        border-left: 20px solid transparent !important;
-        border-bottom: none !important;
-        margin: 0 !important;
+  &__input {
+    flex-grow: 1;
+    padding: 15px 10px 15px 0px;
+    box-sizing: border-box;
+    border: 0;
+    border-bottom: none;
+  }
 
-        background: url(../assets/search_icon.svg) no-repeat;
-        background-position: 0;
-        background-size: 14px 16px;
+  &__input:focus {
+    outline: 0;
+  }
+
+  &__list {
+    position: relative;
+    background: white;
+
+    .infinity_list {
+      width: 100%;
+      position: absolute;
+      max-height: 50vh;
+      overflow: auto;
+
+      background-color: #fff;
+      border-top: 1px solid $steel_gray_80;
+      border-bottom: 1px solid $steel_gray_80;
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 34px 40px 0 rgb(0 0 0 / 30%);
     }
 
-    &__input:focus {
-        outline: 0;
+    &-enter-active {
+      transition: all 0.2s ease;
     }
+
+    &-leave-active {
+      transition: all 0.3s ease;
+    }
+
+    &-enter,
+    &-leave-to {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+  }
+
+  &__execute_button,
+  &__clear_button {
+    height: 100%;
+    background: none;
+    border: none;
+    opacity: 30%;
+    cursor: pointer;
+
+    svg {
+      padding: 0 20px;
+      height: 16px;
+    }
+
+    &:hover {
+      opacity: 70%;
+    }
+  }
 }

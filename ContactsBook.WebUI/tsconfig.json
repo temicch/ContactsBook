@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "es5",
+    "module": "es2015",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
@@ -28,9 +28,9 @@
     ],
   },
   "include": [
+    "ClientApp/src/**/*.vue",
     "ClientApp/src/**/*.ts",
     "ClientApp/src/**/*.tsx",
-    "ClientApp/src/**/*.vue",
   ],
   "exclude": [
     "node_modules"    

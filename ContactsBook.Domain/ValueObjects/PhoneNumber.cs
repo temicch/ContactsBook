@@ -1,4 +1,4 @@
-﻿using System;
+﻿using ContactsBook.Domain.Exceptions;
 using ContactsBook.Utils;
 
 namespace ContactsBook.Domain.ValueObjects
@@ -8,11 +8,16 @@ namespace ContactsBook.Domain.ValueObjects
         public PhoneNumber(long value)
         {
             if (!CommonHelper.IsValidPhoneNumber(value))
-                throw new Exception($"Phone number {value} is not valid");
+                throw new InvalidPhoneNumberException();
 
             Value = value;
         }
 
         public long Value { get; init; }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
     }
 }

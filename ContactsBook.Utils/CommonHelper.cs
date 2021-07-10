@@ -22,7 +22,7 @@ namespace ContactsBook.Utils
         public static bool IsValidEmail(string email)
         {
             if (string.IsNullOrEmpty(email))
-                return false;
+                return true;
 
             email = email.Trim();
 

@@ -36,12 +36,11 @@ namespace ContactsBook.Application.Interfaces.Services
         Task<ContactDto> GetContactByIdAsync(Guid id);
 
         /// <summary>
-        ///     Get contacts by the specified phone number. This method searches among partial matches by phone number.
+        ///     Get contact by phone number
         /// </summary>
-        /// <param name="phoneNumber"></param>
-        /// <returns>Paginated result with <seealso cref="ContactDto" /> items</returns>
-        Task<IPagedList<ContactDto>> GetContactsByPhoneNumberAsync(string phoneNumber,
-            ILimitationParameters limitationParameters);
+        /// <param name="phoneNumber">Contact phone number</param>
+        /// <returns>Contact entity if such exists, null otherwise</returns>
+        Task<ContactDto> GetContactByPhoneNumberAsync(string phoneNumber);
 
         /// <summary>
         ///     Get contacts
@@ -60,10 +59,25 @@ namespace ContactsBook.Application.Interfaces.Services
             string name);
 
         /// <summary>
+        ///     Get contacts by the specified phone number. This method searches among partial matches by phone number.
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <returns>Paginated result with <seealso cref="ContactDto" /> items</returns>
+        Task<IPagedList<ContactDto>> FindContactsByPhoneNumberAsync(string phoneNumber,
+            ILimitationParameters limitationParameters);
+
+        /// <summary>
         ///     Get contacts by the specified person name. This method searches among partial matches by person name.
         /// </summary>
         /// <param name="name">Person name</param>
         /// <returns>Paginated result with <seealso cref="ContactDto" /> items</returns>
-        Task<IPagedList<ContactDto>> GetContactsByNameAsync(string name, ILimitationParameters limitationParameters);
+        Task<IPagedList<ContactDto>> FindContactsByNameAsync(string name, ILimitationParameters limitationParameters);
+
+        /// <summary>
+        /// Check for unique phone number
+        /// </summary>
+        /// <param name="phoneNumber">Phone number</param>
+        /// <returns>True if such contact exists with phone number, false otherwise</returns>
+        Task<bool> IsPhoneNumberExistsAsync(string phoneNumber);
     }
 }

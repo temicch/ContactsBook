@@ -6,19 +6,17 @@
 
 <html lang="en">
 <head runat="server">
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contacts book - <%: Page.Title %></title>
 
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 </head>
 <body>
-<cb:header runat="server" id="Header"/>
-
-
-<form runat="server">
-</form>
-<asp:ContentPlaceHolder ID="MainContent" runat="server">
-</asp:ContentPlaceHolder>
+    <cb:Header runat="server" ID="Header" />
+    <form runat="server">
+    </form>
+    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+    </asp:ContentPlaceHolder>
 </body>
 </html>

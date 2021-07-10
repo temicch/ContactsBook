@@ -1,31 +1,66 @@
-import axios from 'axios';
+import { isContainsOnlyDigits } from "@/utils";
+import axios, { AxiosInstance } from "axios";
 
-import { Contact, GetContactsRequest, PaginatedList, UpdateContactsRequest } from './types';
-
-const conduitApi = axios.create({
-    baseURL: 'http://localhost:56544/api',
+export default class ContactsApiProvider implements ApiProvider<Contact> {
+  public static conduitApi: AxiosInstance = axios.create({
+    baseURL: "https://localhost:44362/api",
   });
 
-export async function getContacts (pageIndex?: number, pageSize?: number): Promise<PaginatedList<Contact>> {
-    const requestParams: GetContactsRequest = {
-        pageSize: pageSize,
-        pageIndex: pageIndex,
+  async GetAll(
+    pageIndex?: number,
+    pageSize?: number,
+    name?: string,
+    phoneNumber?: string
+  ): Promise<PaginatedList<Contact>> {
+    const request: GetContactsRequest = {
+      pageSize: pageSize,
+      pageIndex: pageIndex,
     };
 
-    const request = await conduitApi.get('/contacts', {
-        params: requestParams
-    });
+    if (name != null) request.name = name;
+    if (phoneNumber != null && isContainsOnlyDigits(phoneNumber)) request.phoneNumber = phoneNumber;
 
-    return request.data.response;
-}
+    return await ContactsApiProvider.conduitApi
+      .get("/contacts", {
+        params: request,
+      })
+      .then((result) => result.data.response);
+  }
 
-export async function removeContact (contactId: string): Promise<void> {
-    await conduitApi.delete(`/contacts/${contactId}`);
-}
+  async Get(id: string): Promise<Contact> {
+    const request: GetContactRequest = {
+      id,
+    };
 
-export async function updateContact (contact: Contact): Promise<void> {
+    return await ContactsApiProvider.conduitApi
+      .get(`/contacts/${request.id}`, {
+        params: request,
+      })
+      .then((response) => response.data.response);
+  }
+
+  async Remove(contactId: string): Promise<void> {
+    return await ContactsApiProvider.conduitApi.delete(
+      `/contacts/${contactId}`
+    );
+  }
+
+  async Create<CreateContactResponse>(
+    contact: Contact
+  ): Promise<CreateContactResponse> {
+    return await ContactsApiProvider.conduitApi
+      .post(`/contacts`, contact)
+      .then((response) => response.data);
+  }
+
+  async Update(contact: Contact): Promise<void> {
     const request: UpdateContactsRequest = {
-        ...contact
-    }
-    await conduitApi.put(`/contacts/${request.id}`, request);
+      ...contact,
+    };
+
+    return await ContactsApiProvider.conduitApi.put(
+      `/contacts/${contact.id}`,
+      request
+    );
+  }
 }

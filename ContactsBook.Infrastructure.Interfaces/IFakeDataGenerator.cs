@@ -12,7 +12,7 @@ namespace ContactsBook.Infrastructure.Interfaces
         ///     Generate faked entities list
         /// </summary>
         /// <param name="count">Count of generated entities</param>
-        /// <returns>Generated data list</returns>
+        /// <returns>Generated collection</returns>
         IEnumerable<TEntity> Generate(int count);
     }
 }

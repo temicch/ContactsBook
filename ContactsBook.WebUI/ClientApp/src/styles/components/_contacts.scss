@@ -1,106 +1,120 @@
 .contacts {
-    margin-top: 0;
-    padding-left: 0;
+  &--none {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    padding: 24px;
+    opacity: 60%;
+    text-align: center;
 
-    &--none {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 24px;
-        color: grey;
-        text-transform: uppercase;
-        letter-spacing: 4;
+    &__icon {
+      height: 100px;
+      padding-bottom: 16px;
     }
 
-    &__item {
-        list-style: none;
+    &__title {
+      margin: 0;
     }
 
-    &__item:hover {
-        background: $steel_gray_20;
+    &__text {
+      margin: 0;
     }
-
-    &__item:hover .contact__remove {
-        visibility: visible;
-    }
+  }
 }
 
 .contact {
+  display: flex;
+  height: $contact_height;
+  cursor: pointer;
+  padding-left: 20px;
+  text-decoration: none;
+  color: inherit;
+
+  &__photo {
+    padding: 11px 14px 8px 0;
+  }
+
+  &__top {
     display: flex;
-    height: $contact_height;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: center;
+  }
+
+  &__content {
+    font-size: 13px;
+    flex-grow: 1;
+    padding: 10px 15px 10px 0;
+
+    border-bottom: 1px solid $steel_gray_80;
+  }
+
+  &__name {
+    font-weight: 500;
+    padding-right: 8px;
+  }
+
+  &__phone {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+
+    svg {
+      width: 14px;
+      height: 14px;
+      padding: 0 2px;
+    }
+  }
+
+  &__email {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+
+    opacity: 0.7;
+
+    svg {
+      width: 14px;
+      height: 14px;
+      padding: 0 2px;
+    }
+  }
+
+  &__right_side {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &__remove {
+    visibility: hidden;
+    background-color: transparent;
+
+    border: none;
+    margin-left: 5px;
+
+    padding: 3px;
+
+    width: 18px;
+    height: 18px;
+
+    opacity: 0.3;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__remove:hover {
+    opacity: 0.6;
     cursor: pointer;
-    padding-left: 20px;
-    text-decoration: none;
-    color: inherit;
+  }
 
-    &__photo {
-        padding: 11px 14px 8px 0;
-    }
-
-    &__top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    &__content {
-        font-size: 13px;
-        flex-grow: 1;
-        padding: 10px 15px 10px 0;
-
-        border-bottom: 1px solid $steel_gray_80;
-    }
-
-    &__name {
-        font-weight: 500;
-        padding-right: 8px;
-    }
-
-    &__phone {
-        padding-left: 16px;
-        padding-right: 8px;
-        background: url(../assets/phone_icon.svg) no-repeat;
-        background-position: 0;
-        background-size: 14px 14px;
-        white-space: nowrap;
-    }
-
-    &__email {
-        padding-left: 18px;
-        background: url(../assets/email_icon.svg) no-repeat;
-        background-position: 0;
-        background-size: 14px 14px;
-        white-space: nowrap;
-
-        opacity: 0.7;
-    }
-
-    &__right_side {
-        display: flex;
-        align-items: flex-start;
-    }
-
-    &__remove {
-        visibility: hidden;
-
-        width: 8px;
-        height: 8px;
-        border: none;
-        margin-left: 5px;
-
-        background: url(../assets/close_icon.svg) no-repeat;
-        background-position: 0;
-        background-size: 100%;
-
-        opacity: 0.3;
-    }
-
-    &__remove:hover {
-        opacity: 0.6;
-        cursor: pointer;
-    }
-
-    &__remove:focus {
-        outline: 0;
-    }
+  &__remove:focus {
+    outline: 0;
+  }
 }

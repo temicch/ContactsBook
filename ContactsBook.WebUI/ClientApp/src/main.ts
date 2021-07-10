@@ -1,52 +1,87 @@
 ﻿import Vue from "vue";
+import Notifications from "vue-notification";
 /// @ts-ignore
 import Avatar from "vue-avatar";
 import VueFinalModal from "vue-final-modal";
 import "normalize.css";
 
-import "@/styles/index.scss";
-import { Contact } from "api/types";
-import store from "@/store";
-import { ContactsModule } from "@/store/modules/contacts";
+import "./styles/index.scss";
+import store from "./store";
+import ContactsModule from "./store/modules/contacts";
+import InfinityList from "./components/InfinityList.vue";
+
+import ContactsCreator from "./components/ContactsCreator.vue";
+import ContactsEditor from "./components/ContactsEditor.vue";
+import ContactsNotFound from "./components/ContactsNotFound.vue";
+import ContactsSearch from "./components/ContactsSearch.vue";
+
+import ContactItem from "./components/ContactItem.vue";
+import ContactsSearchModule from "./store/modules/contactsSearch";
 
 Vue.use(VueFinalModal());
+Vue.use(Notifications);
 
 new Vue({
-    el: "#main",
-    store,
-    data() {
-        return {
-            showModal: false,
-        };
+  el: "#main",
+  store,
+  components: {
+    Avatar,
+    InfinityList,
+
+    ContactsNotFound,
+    ContactsSearch,
+    ContactsCreator,
+    ContactsEditor,
+
+    ContactItem,
+  },
+  async mounted() {
+    await ContactsModule.LoadContacts();
+  },
+  methods: {
+    async removeContact(contactId: string) {
+      await ContactsModule.RemoveContact(contactId)
+        .then(async (response) => {
+          await ContactsSearchModule.RemoveContact(contactId);
+        })
+        .catch((error) => {
+          this.$notify({
+            title:
+              "There was an error on removing contact. Please try again later",
+            type: "error",
+          });
+          throw error;
+        });
     },
-    components: {
-        Avatar,
+
+    async onEndReached() {
+      let isEndReached = false;
+      await ContactsModule.NextPage()
+        .then((result) => {
+          if (result) isEndReached = false;
+          else isEndReached = true;
+        })
+        .catch((error) => {
+          isEndReached = true;
+          throw error;
+        });
+      return isEndReached;
     },
-    async mounted() {
-        ContactsModule.LoadContacts();
+
+    async onContactEdited(contact: Contact) {
+      ContactsSearchModule.UpdateContact(contact);
     },
-    methods: {
-        async removeContact(contactId: string) {
-            // await ContactsModule.RemoveContact(contactId);
-        },
+
+    async onContactCreated(contact: Contact) {
+      ContactsSearchModule.CreateContact(contact);
     },
-    filters: {
-        phoneNumber: function (inputPhoneNumber: number) {
-            let i = 0;
-            let phoneNumber: string = inputPhoneNumber.toString();
-            phoneNumber = "+# (###) ### ## ##".replace(
-                /#/g,
-                (_) => phoneNumber[i++]
-            );
-            return phoneNumber;
-        },
+  },
+  computed: {
+    loading(): boolean {
+      return ContactsModule.loading;
     },
-    computed: {
-        loading(): boolean {
-            return ContactsModule.isLoading;
-        },
-        contacts(): Contact[] {
-            return ContactsModule.contacts;
-        },
+    contacts(): Contact[] {
+      return ContactsModule.items;
     },
+  },
 });

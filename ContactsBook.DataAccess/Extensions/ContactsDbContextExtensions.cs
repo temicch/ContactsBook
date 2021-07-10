@@ -23,9 +23,10 @@ namespace ContactsBook.DataAccess.MsSql.Extensions
             var dbConnection = dbContext.Database.GetDbConnection();
 
             var contactId = await dbConnection.ExecuteScalarAsync<Guid>(
-                $"INSERT INTO {tableName} (Name, Email, PhoneNumber) output INSERTED.ID VALUES (@Name, @Email, @PhoneNumber)",
+                $"INSERT INTO {tableName} (Id, Name, Email, PhoneNumber) output INSERTED.ID VALUES (@Id, @Name, @Email, @PhoneNumber)",
                 new
                 {
+                    Id = Guid.NewGuid(),
                     contact.Name,
                     Email = contact.Email.Value,
                     PhoneNumber = contact.PhoneNumber.Value
@@ -40,9 +41,10 @@ namespace ContactsBook.DataAccess.MsSql.Extensions
             var dbConnection = dbContext.Database.GetDbConnection();
 
             var result = await dbConnection.ExecuteAsync(
-                $"INSERT INTO {tableName} (Name, Email, PhoneNumber) VALUES (@Name, @Email, @PhoneNumber)", contacts
+                $"INSERT INTO {tableName} (Id, Name, Email, PhoneNumber) VALUES (@Id, @Name, @Email, @PhoneNumber)", contacts
                     .Select(x => new
                     {
+                        Id = Guid.NewGuid(),
                         x.Name,
                         Email = x.Email.Value,
                         PhoneNumber = x.PhoneNumber.Value
@@ -53,7 +55,7 @@ namespace ContactsBook.DataAccess.MsSql.Extensions
         {
             var dbConnection = dbContext.Database.GetDbConnection();
 
-            var result = await dbConnection.ExecuteAsync($"DELETE FROM {tableName} WHERE Id = @Id", new {Id = id});
+            var result = await dbConnection.ExecuteAsync($"DELETE FROM {tableName} WHERE Id = @Id", new { Id = id });
 
             return result > 0;
         }
@@ -67,8 +69,8 @@ namespace ContactsBook.DataAccess.MsSql.Extensions
                 {
                     contact.Id,
                     contact.Name,
-                    contact.Email,
-                    contact.PhoneNumber
+                    Email = contact.Email.ToString(),
+                    PhoneNumber = contact.PhoneNumber.ToString()
                 });
 
             return result > 0;
@@ -86,7 +88,24 @@ namespace ContactsBook.DataAccess.MsSql.Extensions
                     contact.PhoneNumber = new PhoneNumber(phoneNumber);
 
                     return contact;
-                }, new {Id = id}, splitOn: SPLIT_PARAMETER);
+                }, new { Id = id }, splitOn: SPLIT_PARAMETER);
+
+            return contact.FirstOrDefault();
+        }
+
+        public static async Task<Contact> GetByPhoneNumberAsync(this ContactsDbContext dbContext, string phoneNumber)
+        {
+            var dbConnection = dbContext.Database.GetDbConnection();
+
+            var contact = await dbConnection.QueryAsync<Contact, long, string, Contact>(
+                $"SELECT Id, Name, PhoneNumber, Email from {tableName} WHERE PhoneNumber = @PhoneNumber",
+                (contact, phoneNumber, email) =>
+                {
+                    contact.Email = new Email(email);
+                    contact.PhoneNumber = new PhoneNumber(phoneNumber);
+
+                    return contact;
+                }, new { PhoneNumber = phoneNumber }, splitOn: SPLIT_PARAMETER);
 
             return contact.FirstOrDefault();
         }
@@ -110,14 +129,15 @@ namespace ContactsBook.DataAccess.MsSql.Extensions
             return new SelectResult<Contact>(list.AsList(), totalCount);
         }
 
-        public static async Task<SelectResult<Contact>> GetByPhoneNumberAsync(this ContactsDbContext dbContext,
+        public static async Task<SelectResult<Contact>> FindByPhoneNumberAsync(this ContactsDbContext dbContext,
             string phoneNumber,
             ILimitationParameters limitationParameters)
         {
             var dbConnection = dbContext.Database.GetDbConnection();
 
             var totalCount = await dbConnection.Count("WHERE PhoneNumber LIKE @PhoneNumber",
-                new {PhoneNumber = $"%{phoneNumber}%"});
+                new { PhoneNumber = $"%{phoneNumber}%" });
+
             var list = await dbConnection.QueryAsync<Contact, long, string, Contact>(
                 $"SELECT Id, Name, PhoneNumber, Email from {tableName} WHERE PhoneNumber LIKE @PhoneNumber {limitationParameters.GetMSSqlAddition()}",
                 (contact, phoneNumber, email) =>
@@ -126,7 +146,7 @@ namespace ContactsBook.DataAccess.MsSql.Extensions
                     contact.PhoneNumber = new PhoneNumber(phoneNumber);
 
                     return contact;
-                }, new {PhoneNumber = $"%{phoneNumber}%"}, splitOn: SPLIT_PARAMETER);
+                }, new { PhoneNumber = $"%{ phoneNumber }%" }, splitOn: SPLIT_PARAMETER);
 
             return new SelectResult<Contact>(list.AsList(), totalCount);
         }
@@ -135,8 +155,8 @@ namespace ContactsBook.DataAccess.MsSql.Extensions
         {
             var dbConnection = dbContext.Database.GetDbConnection();
 
-            var totalCount = await dbConnection.Count("WHERE PhoneNumber LIKE @PhoneNumber",
-                new {PhoneNumber = $"%{phoneNumber}%"});
+            var totalCount = await dbConnection.Count("WHERE PhoneNumber = @PhoneNumber",
+                new { PhoneNumber = $"{ phoneNumber }" });
 
             return totalCount > 0;
         }
@@ -147,7 +167,7 @@ namespace ContactsBook.DataAccess.MsSql.Extensions
         {
             var dbConnection = dbContext.Database.GetDbConnection();
 
-            var totalCount = await dbConnection.Count("WHERE Name LIKE @Name", new {Name = $"%{name}%"});
+            var totalCount = await dbConnection.Count("WHERE Name LIKE @Name", new { Name = $"%{name}%" });
             var list = await dbConnection.QueryAsync<Contact, long, string, Contact>(
                 $"SELECT Id, Name, PhoneNumber, Email from {tableName} WHERE Name LIKE @Name {limitationParameters.GetMSSqlAddition()}",
                 (contact, phoneNumber, email) =>
@@ -156,7 +176,7 @@ namespace ContactsBook.DataAccess.MsSql.Extensions
                     contact.PhoneNumber = new PhoneNumber(phoneNumber);
 
                     return contact;
-                }, new {Name = $"%{name}%"}, splitOn: SPLIT_PARAMETER);
+                }, new { Name = $"%{name}%" }, splitOn: SPLIT_PARAMETER);
 
             return new SelectResult<Contact>(list.AsList(), totalCount);
         }

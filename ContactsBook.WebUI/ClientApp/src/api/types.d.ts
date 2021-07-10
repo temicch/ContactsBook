@@ -1,37 +1,59 @@
-export interface GetContactsResponse {
-    response: PaginatedList<Contact>;
+interface GetContactsResponse {
+  response: PaginatedList<Contact>;
 }
 
-export interface GetContactsRequest {
-    phoneNumber?: string,
-    name?: string,
-    pageSize?: number,
-    pageIndex?: number
+interface GetContactsRequest {
+  phoneNumber?: string;
+  name?: string;
+  pageSize?: number;
+  pageIndex?: number;
 }
 
-export interface UpdateContactsRequest {
-    id: string,
-    name: string,
-    phoneNumber: number,
-    email?: string
+interface GetContactRequest {
+  id: string;
 }
 
-export interface Contact {
-    id: string,
-    name: string,
-    phoneNumber: number,
-    email?: string
+interface UpdateContactsRequest {
+  id: string;
+  name: string;
+  phoneNumber: number;
+  email?: string;
 }
 
-export interface PaginatedParams {
-    pageIndex: number,
-    pageSize: number,
-    totalCount: number,
-    totalPages: number,
-    hasPreviousPage: boolean,
-    hasNextPage: boolean
+interface CreateContactRequest {
+  name: string;
+  phoneNumber: number;
+  email?: string;
 }
 
-export type PaginatedList<Type> = PaginatedParams & {
-    items: Type[],
+interface CreateContactResponse {
+  id: string;
 }
+
+interface Contact {
+  id: string;
+  name: string;
+  phoneNumber: number;
+  email?: string;
+}
+
+interface PaginatedParams {
+  pageIndex: number;
+  pageSize: number;
+  totalCount: number;
+  totalPages: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+}
+
+interface ApiProvider<T> {
+  Get(id: string): Promise<T>;
+  GetAll(pageIndex?: number, pageSize?: number, name?: string, phoneNumber?: string): Promise<PaginatedList<T>>;
+  Remove(id: string): Promise<void>;
+  Create<Response>(item: T): Promise<Response>;
+  Update(item: T): Promise<void>;
+}
+
+type PaginatedList<Type> = PaginatedParams & {
+  items: Type[];
+};

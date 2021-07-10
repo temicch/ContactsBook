@@ -1,4 +1,4 @@
-﻿using System;
+﻿using ContactsBook.Domain.Exceptions;
 using ContactsBook.Utils;
 
 namespace ContactsBook.Domain.ValueObjects
@@ -7,11 +7,17 @@ namespace ContactsBook.Domain.ValueObjects
     {
         public Email(string value)
         {
-            if (!CommonHelper.IsValidEmail(value)) throw new Exception($"Email {value} is not valid");
+            if (!CommonHelper.IsValidEmail(value)) 
+                throw new InvalidEmailException();
 
             Value = value;
         }
 
         public string Value { get; init; }
+
+        public override string ToString()
+        {
+            return Value;
+        }
     }
 }
