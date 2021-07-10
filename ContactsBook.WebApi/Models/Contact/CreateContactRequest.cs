@@ -1,3 +1,4 @@
+﻿using ContactsBook.Application.Interfaces.Services;
 using ContactsBook.WebApi.Extensions;
 using FluentValidation;
 
@@ -12,7 +13,7 @@ namespace ContactsBook.WebApi.Models.Contact
 
     public class CreateContactRequstValidator : AbstractValidator<CreateContactRequest>
     {
-        public CreateContactRequstValidator()
+        public CreateContactRequstValidator(IContactsService contactsService)
         {
             RuleFor(x => x.Name)
                 .CbName();
@@ -22,7 +23,10 @@ namespace ContactsBook.WebApi.Models.Contact
 
             RuleFor(x => x.PhoneNumber)
                 .Cascade(CascadeMode.Stop)
-                .CbPhoneNumber();
+                .CbPhoneNumber()
+                .MustAsync(async (phoneNumber, cancellationToken) =>
+                    !await contactsService.IsPhoneNumberExistsAsync(phoneNumber.ToString()))
+                    .WithMessage("Contact with phone number '{PropertyValue}' is already exists");
         }
     }
 }

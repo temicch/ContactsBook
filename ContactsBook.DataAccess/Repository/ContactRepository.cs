@@ -46,21 +46,31 @@ namespace ContactsBook.DataAccess.MsSql.Repository
             return await _dbContext.GetByIdAsync(id);
         }
 
-        public async Task<ISelectResult<Contact>> GetAsync(ILimitationParameters limitationParameters)
+        public async Task<ISelectResult<Contact>> GetAllAsync(ILimitationParameters limitationParameters)
         {
             return await _dbContext.GetAsync(limitationParameters);
         }
 
-        public async Task<ISelectResult<Contact>> GetByPhoneNumberAsync(string phoneNumber,
+        public async Task<ISelectResult<Contact>> FindByPhoneNumberAsync(string phoneNumber,
             ILimitationParameters limitationParameters)
         {
-            return await _dbContext.GetByPhoneNumberAsync(phoneNumber, limitationParameters);
+            return await _dbContext.FindByPhoneNumberAsync(phoneNumber, limitationParameters);
         }
 
-        public async Task<ISelectResult<Contact>> GetByNameAsync(string name,
+        public async Task<ISelectResult<Contact>> FindByNameAsync(string name,
             ILimitationParameters limitationParameters)
         {
             return await _dbContext.GetByNameAsync(name, limitationParameters);
+        }
+
+        public async Task<bool> IsPhoneNumberExistsAsync(string phoneNumber)
+        {
+            return await _dbContext.IsPhoneNumberExistAsync(phoneNumber);
+        }
+
+        public async Task<Contact> GetByPhoneNumberAsync(string phoneNumber)
+        {
+            return await _dbContext.GetByPhoneNumberAsync(phoneNumber);
         }
     }
 }
