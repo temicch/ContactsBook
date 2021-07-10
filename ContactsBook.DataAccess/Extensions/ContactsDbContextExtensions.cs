@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -23,9 +23,10 @@ namespace ContactsBook.DataAccess.MsSql.Extensions
             var dbConnection = dbContext.Database.GetDbConnection();
 
             var contactId = await dbConnection.ExecuteScalarAsync<Guid>(
-                $"INSERT INTO {tableName} (Name, Email, PhoneNumber) output INSERTED.ID VALUES (@Name, @Email, @PhoneNumber)",
+                $"INSERT INTO {tableName} (Id, Name, Email, PhoneNumber) output INSERTED.ID VALUES (@Id, @Name, @Email, @PhoneNumber)",
                 new
                 {
+                    Id = Guid.NewGuid(),
                     contact.Name,
                     Email = contact.Email.Value,
                     PhoneNumber = contact.PhoneNumber.Value
@@ -40,9 +41,10 @@ namespace ContactsBook.DataAccess.MsSql.Extensions
             var dbConnection = dbContext.Database.GetDbConnection();
 
             var result = await dbConnection.ExecuteAsync(
-                $"INSERT INTO {tableName} (Name, Email, PhoneNumber) VALUES (@Name, @Email, @PhoneNumber)", contacts
+                $"INSERT INTO {tableName} (Id, Name, Email, PhoneNumber) VALUES (@Id, @Name, @Email, @PhoneNumber)", contacts
                     .Select(x => new
                     {
+                        Id = Guid.NewGuid(),
                         x.Name,
                         Email = x.Email.Value,
                         PhoneNumber = x.PhoneNumber.Value
@@ -67,8 +69,8 @@ namespace ContactsBook.DataAccess.MsSql.Extensions
                 {
                     contact.Id,
                     contact.Name,
-                    contact.Email,
-                    contact.PhoneNumber
+                    Email = contact.Email.ToString(),
+                    PhoneNumber = contact.PhoneNumber.ToString()
                 });
 
             return result > 0;
