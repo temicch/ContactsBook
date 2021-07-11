@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using ContactsBook.Application.Interfaces.PagedList;
 
@@ -13,6 +13,9 @@ namespace ContactsBook.Application.PagedList
 
         public PagedList(IEnumerable<T> source, ILimitationParameters limitationParameters, int totalCount)
         {
+            if (totalCount < 1)
+                throw new ArgumentOutOfRangeException(nameof(totalCount), "Total count must be positive value");
+
             PageIndex = limitationParameters.PageIndex;
 
             TotalCount = totalCount;
@@ -23,7 +26,7 @@ namespace ContactsBook.Application.PagedList
 
             PageSize = limitationParameters.PageSize;
 
-            Items = new List<T>(source);
+            Items = source == null ? new List<T>() : new List<T>(source);
         }
 
         public int PageIndex { get; set; }
