@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
@@ -17,7 +17,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsBook.Utils", "Conta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsBook.Infrastructure.Interfaces", "ContactsBook.Infrastructure.Interfaces\ContactsBook.Infrastructure.Interfaces.csproj", "{BC164DB8-6D62-4201-9770-57FE2AFCA384}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsBook.Application.Interfaces", "ContactsBook.Application.Interfaces\ContactsBook.Application.Interfaces.csproj", "{330F0A3B-586B-4689-BEA1-9F75E132212A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsBook.Application.Interfaces", "ContactsBook.Application.Interfaces\ContactsBook.Application.Interfaces.csproj", "{330F0A3B-586B-4689-BEA1-9F75E132212A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FDB7B8BC-FDA3-448D-BD56-95682AFD71FB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsBook.Domain.UnitTests", "ContactsBook.Domain.UnitTests\ContactsBook.Domain.UnitTests.csproj", "{51EDCBA8-A3AF-4D03-AF71-679179AC6A40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsBook.Application.UnitTests", "ContactsBook.Application.UnitTests\ContactsBook.Application.UnitTests.csproj", "{84093BAD-8934-4778-84D5-F2B745132716}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsBook.Application.IntegrationTests", "ContactsBook.Application.IntegrationTests\ContactsBook.Application.IntegrationTests.csproj", "{2F3BE12B-25D6-455A-9C8B-6401FEAD96CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,9 +65,26 @@ Global
 		{330F0A3B-586B-4689-BEA1-9F75E132212A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{330F0A3B-586B-4689-BEA1-9F75E132212A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{330F0A3B-586B-4689-BEA1-9F75E132212A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51EDCBA8-A3AF-4D03-AF71-679179AC6A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51EDCBA8-A3AF-4D03-AF71-679179AC6A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51EDCBA8-A3AF-4D03-AF71-679179AC6A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51EDCBA8-A3AF-4D03-AF71-679179AC6A40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84093BAD-8934-4778-84D5-F2B745132716}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84093BAD-8934-4778-84D5-F2B745132716}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84093BAD-8934-4778-84D5-F2B745132716}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84093BAD-8934-4778-84D5-F2B745132716}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F3BE12B-25D6-455A-9C8B-6401FEAD96CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F3BE12B-25D6-455A-9C8B-6401FEAD96CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F3BE12B-25D6-455A-9C8B-6401FEAD96CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F3BE12B-25D6-455A-9C8B-6401FEAD96CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{51EDCBA8-A3AF-4D03-AF71-679179AC6A40} = {FDB7B8BC-FDA3-448D-BD56-95682AFD71FB}
+		{84093BAD-8934-4778-84D5-F2B745132716} = {FDB7B8BC-FDA3-448D-BD56-95682AFD71FB}
+		{2F3BE12B-25D6-455A-9C8B-6401FEAD96CF} = {FDB7B8BC-FDA3-448D-BD56-95682AFD71FB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09387BAD-20FA-4F3C-AEC4-D41854DC88DA}
