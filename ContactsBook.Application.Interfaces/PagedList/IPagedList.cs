@@ -38,6 +38,11 @@ namespace ContactsBook.Application.Interfaces.PagedList
         bool HasNextPage { get; }
 
         /// <summary>
+        ///     Is current page exists. False will returned if page is more than max page index
+        /// </summary>
+        bool IsPageExists { get; }
+
+        /// <summary>
         ///     Collection
         /// </summary>
         IList<T> Items { get; }

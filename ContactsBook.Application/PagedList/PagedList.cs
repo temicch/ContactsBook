@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using ContactsBook.Application.Interfaces.PagedList;
 
@@ -32,6 +32,7 @@ namespace ContactsBook.Application.PagedList
         public int PageSize { get; set; }
         public bool HasNextPage => PageIndex + 1 < TotalPages;
         public bool HasPreviousPage => PageIndex > 0;
+        public bool IsPageExists => PageIndex < TotalPages;
         public IList<T> Items { get; private set; }
     }
 }

@@ -44,6 +44,7 @@ interface PaginatedParams {
   totalPages: number;
   hasPreviousPage: boolean;
   hasNextPage: boolean;
+  isPageExists: boolean;
 }
 
 interface ApiProvider<T> {
