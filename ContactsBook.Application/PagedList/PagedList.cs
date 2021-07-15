@@ -13,8 +13,8 @@ namespace ContactsBook.Application.PagedList
 
         public PagedList(IEnumerable<T> source, ILimitationParameters limitationParameters, int totalCount)
         {
-            if (totalCount < 1)
-                throw new ArgumentOutOfRangeException(nameof(totalCount), "Total count must be positive value");
+            if (totalCount < 0)
+                throw new ArgumentOutOfRangeException(nameof(totalCount), "Total count must be non negative value");
 
             PageIndex = limitationParameters.PageIndex;
 

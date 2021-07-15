@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using ContactsBook.Application.PagedList;
-using ContactsBook.Application.UnitTests.Fixture.SourcePagedList;
 using Xunit;
 
 namespace ContactsBook.Application.UnitTests
@@ -9,8 +8,12 @@ namespace ContactsBook.Application.UnitTests
     public class PaginatedListTesting
     {
         [Theory]
-        [ClassData(typeof(ValidSourcePagedListSetup))]
-        public void CreatedPagedList_ShouldHave_CorrectProperties(int countOfElements,
+        [InlineData(100, 20, 0, 100, true, false, 5)]
+        [InlineData(100, 20, 1, 100, true, true, 5)]
+        [InlineData(100, 20, 16, 100, false, true, 5)]
+        [InlineData(100, 3, 5, 100, true, true, 34)]
+        [InlineData(0, 10, 0, 0, false, false, 0)]
+        public void Created_PagedList_Is_Have_CorrectProperties(int countOfElements,
             int pageSize,
             int pageIndex,
             int totalCount,
@@ -32,10 +35,9 @@ namespace ContactsBook.Application.UnitTests
         }
 
         [Theory]
-        [InlineData(0)]
         [InlineData(-1)]
         [InlineData(-1000)]
-        public void CreatePagedList_MustThrow_OnNonPositiveInputParameters(int totalCount)
+        public void PagedList_With_Negative_TotalCount_Cant_Be_Created(int totalCount)
         {
             // Assign
             var limitationParameters = new LimitationParameters(50, 1);
@@ -54,7 +56,8 @@ namespace ContactsBook.Application.UnitTests
         [InlineData(100, 0, 10, true)]
         [InlineData(1, 0, 10, true)]
         [InlineData(1, 1, 10, false)]
-        public void CreatedPagedList_MustCorrectlyReturnsIsPageExists(int totalCount, int pageIndex, int pageSize,
+        [InlineData(0, 0, 10, false)]
+        public void Created_PagedList_Returns_Correct_Flag_Of_Existing_Page(int totalCount, int pageIndex, int pageSize,
             bool isPageExists)
         {
             // Assign
