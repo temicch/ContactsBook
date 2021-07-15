@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -77,18 +77,6 @@ namespace ContactsBook.Application.Services
         public async Task<bool> IsPhoneNumberExistsAsync(string phoneNumber)
         {
             return await _contactRepository.IsPhoneNumberExistsAsync(phoneNumber);
-        }
-
-        public async Task<IPagedList<ContactDto>> GetContactsAsync(ILimitationParameters limitationParameters,
-            string phoneNumber = null, string name = null)
-        {
-            if (phoneNumber != null)
-                return await FindContactsByPhoneNumberAsync(phoneNumber, limitationParameters);
-
-            if (name != null)
-                return await FindContactsByNameAsync(name, limitationParameters);
-
-            return await GetContactsAsync(limitationParameters);
         }
 
         public async Task<ContactDto> GetContactByPhoneNumberAsync(string phoneNumber)

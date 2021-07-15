@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using ContactsBook.Application.Interfaces.Models;
+using ContactsBook.Application.Interfaces.PagedList;
 using ContactsBook.Application.Interfaces.Services;
 using ContactsBook.Application.PagedList;
 using ContactsBook.WebApi.Models.Contact;
@@ -25,8 +26,14 @@ namespace ContactsBook.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<GetContactsResponse>> Get([FromQuery] GetContactsRequest request)
         {
-            var contacts = await _contactsService.GetContactsAsync(
-                new LimitationParameters(request.PageSize, request.PageIndex), request.PhoneNumber, request.Name);
+            IPagedList<ContactDto> contacts;
+            var limitParameters = new LimitationParameters(request.PageSize, request.PageIndex);
+
+            if (!string.IsNullOrEmpty(request.PhoneNumber?.Trim()))
+                contacts = await _contactsService.FindContactsByPhoneNumberAsync(request.PhoneNumber, limitParameters);
+            else if (!string.IsNullOrEmpty(request.Name?.Trim()))
+                contacts = await _contactsService.FindContactsByNameAsync(request.Name, limitParameters);
+            else contacts = await _contactsService.GetContactsAsync(limitParameters);
 
             var mapping = _mapper.Map<GetContactsResponse>(contacts);
 

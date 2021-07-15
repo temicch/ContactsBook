@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using ContactsBook.Application.Interfaces.Models;
 using ContactsBook.Application.Interfaces.PagedList;
@@ -47,16 +47,6 @@ namespace ContactsBook.Application.Interfaces.Services
         /// </summary>
         /// <returns>Paginated result with <seealso cref="ContactDto" /> items</returns>
         Task<IPagedList<ContactDto>> GetContactsAsync(ILimitationParameters limitationParameters);
-
-        /// <summary>
-        ///     Get contacts with filters. Only one filter will be expected
-        /// </summary>
-        /// <param name="limitationParameters"></param>
-        /// <param name="phoneNumber"></param>
-        /// <param name="name"></param>
-        /// <returns>Paginated result with <seealso cref="ContactDto" /> items</returns>
-        Task<IPagedList<ContactDto>> GetContactsAsync(ILimitationParameters limitationParameters, string phoneNumber,
-            string name);
 
         /// <summary>
         ///     Get contacts by the specified phone number. This method searches among partial matches by phone number.
