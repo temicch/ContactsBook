@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using ContactsBook.Utils;
+using Xunit;
 
 namespace ContactsBook.Domain.UnitTests.Fixture.PhoneNumber
 {
@@ -6,8 +7,8 @@ namespace ContactsBook.Domain.UnitTests.Fixture.PhoneNumber
     {
         public ValidPhoneNumbersSetup()
         {
-            Add(99999999999);
-            Add(10000000000);
+            Add(CommonHelper.MAX_VALID_PHONE_NUMBER);
+            Add(CommonHelper.MIN_VALID_PHONE_NUMBER);
             Add(98784111240);
             Add(11123354732);
             Add(55555555511);
