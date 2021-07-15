@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -24,6 +24,10 @@ namespace ContactsBook.Application.Services
 
         public async Task<Guid> AddContactAsync(ContactDto contact)
         {
+            var contactWithSamePhone = await _contactRepository.GetByPhoneNumberAsync(contact.PhoneNumber.ToString());
+            if (contactWithSamePhone != null)
+                return default;
+
             return await _contactRepository.InsertAsync(_mapper.Map<Contact>(contact));
         }
 
@@ -34,6 +38,10 @@ namespace ContactsBook.Application.Services
 
         public async Task<bool> UpdateContactAsync(ContactDto contact)
         {
+            var contactWithSamePhone = await _contactRepository.GetByPhoneNumberAsync(contact.PhoneNumber.ToString());
+            if (contactWithSamePhone != null && contactWithSamePhone.Id != contact.Id)
+                return false;
+
             return await _contactRepository.UpdateAsync(_mapper.Map<Contact>(contact));
         }
 
