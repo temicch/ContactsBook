@@ -1,4 +1,3 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
@@ -23,9 +22,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FDB7B8BC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsBook.Domain.UnitTests", "ContactsBook.Domain.UnitTests\ContactsBook.Domain.UnitTests.csproj", "{51EDCBA8-A3AF-4D03-AF71-679179AC6A40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsBook.Application.UnitTests", "ContactsBook.Application.UnitTests\ContactsBook.Application.UnitTests.csproj", "{84093BAD-8934-4778-84D5-F2B745132716}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsBook.Application.UnitTests", "ContactsBook.Application.UnitTests\ContactsBook.Application.UnitTests.csproj", "{84093BAD-8934-4778-84D5-F2B745132716}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsBook.Application.IntegrationTests", "ContactsBook.Application.IntegrationTests\ContactsBook.Application.IntegrationTests.csproj", "{2F3BE12B-25D6-455A-9C8B-6401FEAD96CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsBook.Application.IntegrationTests", "ContactsBook.Application.IntegrationTests\ContactsBook.Application.IntegrationTests.csproj", "{2F3BE12B-25D6-455A-9C8B-6401FEAD96CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsBook.Tests.Common", "ContactsBook.Tests.Common\ContactsBook.Tests.Common.csproj", "{3FE8BD54-33FB-4D57-8BBF-161EED1E0B4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +78,10 @@ Global
 		{2F3BE12B-25D6-455A-9C8B-6401FEAD96CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F3BE12B-25D6-455A-9C8B-6401FEAD96CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F3BE12B-25D6-455A-9C8B-6401FEAD96CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FE8BD54-33FB-4D57-8BBF-161EED1E0B4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FE8BD54-33FB-4D57-8BBF-161EED1E0B4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FE8BD54-33FB-4D57-8BBF-161EED1E0B4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FE8BD54-33FB-4D57-8BBF-161EED1E0B4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +90,7 @@ Global
 		{51EDCBA8-A3AF-4D03-AF71-679179AC6A40} = {FDB7B8BC-FDA3-448D-BD56-95682AFD71FB}
 		{84093BAD-8934-4778-84D5-F2B745132716} = {FDB7B8BC-FDA3-448D-BD56-95682AFD71FB}
 		{2F3BE12B-25D6-455A-9C8B-6401FEAD96CF} = {FDB7B8BC-FDA3-448D-BD56-95682AFD71FB}
+		{3FE8BD54-33FB-4D57-8BBF-161EED1E0B4F} = {FDB7B8BC-FDA3-448D-BD56-95682AFD71FB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09387BAD-20FA-4F3C-AEC4-D41854DC88DA}
