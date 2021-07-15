@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using ContactsBook.Application.Interfaces.Models;
 using ContactsBook.Application.Interfaces.PagedList;
@@ -64,7 +64,7 @@ namespace ContactsBook.Application.Interfaces.Services
         Task<IPagedList<ContactDto>> FindContactsByNameAsync(string name, ILimitationParameters limitationParameters);
 
         /// <summary>
-        /// Check for unique phone number
+        ///     Check for unique phone number
         /// </summary>
         /// <param name="phoneNumber">Phone number</param>
         /// <returns>True if such contact exists with phone number, false otherwise</returns>

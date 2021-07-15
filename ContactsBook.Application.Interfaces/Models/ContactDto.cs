@@ -2,7 +2,7 @@
 
 namespace ContactsBook.Application.Interfaces.Models
 {
-    public class ContactDto
+    public record ContactDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

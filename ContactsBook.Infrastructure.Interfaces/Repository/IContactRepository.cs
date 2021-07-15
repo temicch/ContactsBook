@@ -72,7 +72,7 @@ namespace ContactsBook.Infrastructure.Interfaces.Repository
         Task<ISelectResult<TEntity>> GetAllAsync(ILimitationParameters limitationParameters);
 
         /// <summary>
-        /// Check for unique phone number
+        ///     Check for unique phone number
         /// </summary>
         /// <param name="phoneNumber">Phone number</param>
         /// <returns>True if such contact exists with phone number, false otherwise</returns>

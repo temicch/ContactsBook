@@ -10,7 +10,7 @@ namespace ContactsBook.Domain.UnitTests
     {
         [Theory]
         [ClassData(typeof(ValidEmailsSetup))]
-        public void CreateValidEmail_ShouldBeSuccess(string email)
+        public void Valid_Email_Is_Created(string email)
         {
             var emailVO = new Email(email);
 
@@ -19,14 +19,14 @@ namespace ContactsBook.Domain.UnitTests
 
         [Theory]
         [ClassData(typeof(InvalidEmailsSetup))]
-        public void CreateInvalidEmail_ShouldThrow(string email)
+        public void Invalid_Email_Is_Throw_Exception(string email)
         {
             Assert.Throws<InvalidEmailException>(() => new Email(email));
         }
 
         [Theory]
         [ClassData(typeof(ValidPhoneNumbersSetup))]
-        public void CreateValidPhoneNumber_ShouldBeSuccess(long phoneNumber)
+        public void Valid_PhoneNumber_Is_Created(long phoneNumber)
         {
             var phoneNumberVO = new PhoneNumber(phoneNumber);
 
@@ -35,7 +35,7 @@ namespace ContactsBook.Domain.UnitTests
 
         [Theory]
         [ClassData(typeof(InvalidPhoneNumbersSetup))]
-        public void CreateInvalidPhoneNumber_ShouldThrow(long phoneNumber)
+        public void Invalid_Phone_Is_Throw_Exception(long phoneNumber)
         {
             Assert.Throws<InvalidPhoneNumberException>(() => new PhoneNumber(phoneNumber));
         }

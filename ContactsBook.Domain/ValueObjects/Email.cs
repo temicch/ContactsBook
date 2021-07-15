@@ -7,7 +7,7 @@ namespace ContactsBook.Domain.ValueObjects
     {
         public Email(string value)
         {
-            if (!CommonHelper.IsValidEmail(value)) 
+            if (!CommonHelper.IsValidEmail(value))
                 throw new InvalidEmailException();
 
             Value = value;
