@@ -22,7 +22,9 @@ namespace ContactsBook.DataAccess.MsSql
             _faker.RuleFor(p => p.Id, _ => Guid.NewGuid())
                 .RuleFor(p => p.Name, f => f.Person.FullName)
                 .RuleFor(p => p.Email, f => new Email(f.Person.Email))
-                .RuleFor(p => p.PhoneNumber, f => new PhoneNumber(f.Random.Long(CommonHelper.MIN_VALID_PHONE_NUMBER, CommonHelper.MAX_VALID_PHONE_NUMBER)));
+                .RuleFor(p => p.PhoneNumber,
+                    f => new PhoneNumber(f.Random.Long(CommonHelper.MIN_VALID_PHONE_NUMBER,
+                        CommonHelper.MAX_VALID_PHONE_NUMBER)));
 
             return _faker.GenerateLazy(count);
         }

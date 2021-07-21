@@ -44,7 +44,8 @@ namespace ContactsBook.WebApi.Extensions
         public static IRuleBuilderOptions<TEntity, long> CbPhoneNumber<TEntity>(
             this IRuleBuilderInitial<TEntity, long> ruleBuilder)
         {
-            return ruleBuilder.InclusiveBetween(CommonHelper.MIN_VALID_PHONE_NUMBER, CommonHelper.MAX_VALID_PHONE_NUMBER);
+            return ruleBuilder.InclusiveBetween(CommonHelper.MIN_VALID_PHONE_NUMBER,
+                CommonHelper.MAX_VALID_PHONE_NUMBER);
         }
 
         internal class ContactsBookEmailValidator<T> : AspNetCoreCompatibleEmailValidator<T>

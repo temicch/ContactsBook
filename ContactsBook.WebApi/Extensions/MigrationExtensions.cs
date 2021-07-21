@@ -1,4 +1,6 @@
-﻿using ContactsBook.DataAccess.MsSql;
+﻿using System;
+using System.Linq;
+using ContactsBook.DataAccess.MsSql;
 using ContactsBook.Domain.Entities;
 using ContactsBook.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -7,8 +9,6 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
 
 namespace ContactsBook.WebApi.Extensions
 {
@@ -25,7 +25,8 @@ namespace ContactsBook.WebApi.Extensions
                 {
                     if (context.Database.IsSqlServer())
                     {
-                        var isDbExists = (context.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator)?.Exists();
+                        var isDbExists = (context.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator)
+                            ?.Exists();
 
                         context.Database.Migrate();
 
