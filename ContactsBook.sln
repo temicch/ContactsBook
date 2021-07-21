@@ -26,7 +26,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsBook.Application.Un
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsBook.Application.IntegrationTests", "ContactsBook.Application.IntegrationTests\ContactsBook.Application.IntegrationTests.csproj", "{2F3BE12B-25D6-455A-9C8B-6401FEAD96CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsBook.Tests.Common", "ContactsBook.Tests.Common\ContactsBook.Tests.Common.csproj", "{3FE8BD54-33FB-4D57-8BBF-161EED1E0B4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsBook.Tests.Common", "ContactsBook.Tests.Common\ContactsBook.Tests.Common.csproj", "{3FE8BD54-33FB-4D57-8BBF-161EED1E0B4F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{68CD73F2-164E-47A0-80C3-01A830CB1253}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
