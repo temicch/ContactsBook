@@ -346,3 +346,5 @@ healthchecksdb
 ContactsBook.WebUI/ClientApp/dist/
 
 ContactsBook.WebUI/.vscode/
+
+ContactsBook.WebApi/ContactsBook.WebApi.xml

@@ -7,6 +7,9 @@ namespace ContactsBook.Utils
         // From https://emailregex.com/
         private const string EMAIL_EXPRESSION = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
 
+        public const long MIN_VALID_PHONE_NUMBER = 10000000000;
+        public const long MAX_VALID_PHONE_NUMBER = 99999999999;
+
         private static readonly Regex _emailRegex;
 
         static CommonHelper()
@@ -36,7 +39,7 @@ namespace ContactsBook.Utils
         /// <returns>true if the string is a valid phone number and false if it's not</returns>
         public static bool IsValidPhoneNumber(long phoneNumber)
         {
-            return !((phoneNumber < 10000000000) | (phoneNumber > 99999999999));
+            return !((phoneNumber < MIN_VALID_PHONE_NUMBER) | (phoneNumber > 99999999999));
         }
     }
 }

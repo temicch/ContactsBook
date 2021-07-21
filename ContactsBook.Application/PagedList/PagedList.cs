@@ -13,6 +13,9 @@ namespace ContactsBook.Application.PagedList
 
         public PagedList(IEnumerable<T> source, ILimitationParameters limitationParameters, int totalCount)
         {
+            if (totalCount < 0)
+                throw new ArgumentOutOfRangeException(nameof(totalCount), "Total count must be non negative value");
+
             PageIndex = limitationParameters.PageIndex;
 
             TotalCount = totalCount;
@@ -23,7 +26,7 @@ namespace ContactsBook.Application.PagedList
 
             PageSize = limitationParameters.PageSize;
 
-            Items = new List<T>(source);
+            Items = source == null ? new List<T>() : new List<T>(source);
         }
 
         public int PageIndex { get; set; }
@@ -32,6 +35,7 @@ namespace ContactsBook.Application.PagedList
         public int PageSize { get; set; }
         public bool HasNextPage => PageIndex + 1 < TotalPages;
         public bool HasPreviousPage => PageIndex > 0;
+        public bool IsPageExists => PageIndex < TotalPages;
         public IList<T> Items { get; private set; }
     }
 }

@@ -46,8 +46,6 @@ namespace ContactsBook.DataAccess.MsSql.Configurations
 
             builder.HasIndex(p => p.Name)
                 .IsClustered(false);
-
-            //builder.HasData(_contactsGenerator.Generate(CONTACTS_SEED_COUNT));
         }
     }
 }

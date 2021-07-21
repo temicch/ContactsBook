@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Reflection;
 using Bogus;
 using ContactsBook.Application;
@@ -45,6 +47,9 @@ namespace ContactsBook.WebApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "ContactsBook.WebApi", Version = "v1"});
+
+                var filePath = Path.Combine(AppContext.BaseDirectory, "ContactsBook.WebApi.xml");
+                c.IncludeXmlComments(filePath);
             });
 
             services.AddDbContext<ContactsDbContext>(options =>

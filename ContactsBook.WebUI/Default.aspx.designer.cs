@@ -7,11 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ContactsBook.WebUI
-{
-
-
-    public partial class _Default
-    {
+namespace ContactsBook.WebUI {
+    
+    
+    public partial class _Default {
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new ContactsBook.WebUI.SiteMaster Master {
+            get {
+                return ((ContactsBook.WebUI.SiteMaster)(base.Master));
+            }
+        }
     }
 }

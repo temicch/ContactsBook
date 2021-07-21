@@ -120,6 +120,9 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="package.json" />
+    <Content Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </Content>
     <None Include="packages.config" />
     <Content Include="tsconfig.json" />
     <None Include="Web.Debug.config">

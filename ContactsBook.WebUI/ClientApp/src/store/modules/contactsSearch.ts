@@ -24,6 +24,7 @@ export class ContactsSearch extends VuexModule implements ContactsSearchState {
     totalPages: 0,
     hasPreviousPage: false,
     hasNextPage: false,
+    isPageExists: true,
   };
 
   @Mutation
@@ -53,6 +54,7 @@ export class ContactsSearch extends VuexModule implements ContactsSearchState {
       hasPreviousPage:
         payload.hasPreviousPage ?? this.paginatedParams.hasPreviousPage,
       hasNextPage: payload.hasNextPage ?? this.paginatedParams.hasNextPage,
+      isPageExists: payload.isPageExists ?? this.paginatedParams.isPageExists,
       pageIndex: payload.pageIndex ?? this.paginatedParams.pageIndex,
       pageSize: payload.pageSize ?? this.paginatedParams.pageSize,
       totalPages: payload.totalPages ?? this.paginatedParams.totalPages,

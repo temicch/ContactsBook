@@ -7,28 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ContactsBook.WebUI
-{
-
-
-    public partial class SiteMaster
-    {
-
+namespace ContactsBook.WebUI {
+    
+    
+    public partial class SiteMaster {
+        
         /// <summary>
         /// Header control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// To modify, move the field declaration from the designer file to a code-behind file.
         /// </remarks>
         protected global::ContactsBook.WebUI.App_Data.Header Header;
-
+        
         /// <summary>
         /// MainContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// To modify, move the field declaration from the designer file to a code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
     }

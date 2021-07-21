@@ -20,9 +20,6 @@ namespace ContactsBook.DataAccess.MsSql.Repository
 
         public async Task<Guid> InsertAsync(Contact contact)
         {
-            if (await _dbContext.IsPhoneNumberExistAsync(contact.PhoneNumber.Value.ToString()))
-                return default;
-
             return await _dbContext.InsertAsync(contact);
         }
 

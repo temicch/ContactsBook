@@ -26,7 +26,7 @@ namespace ContactsBook.WebApi.Models.Contact
                 .CbPhoneNumber()
                 .MustAsync(async (phoneNumber, cancellationToken) =>
                     !await contactsService.IsPhoneNumberExistsAsync(phoneNumber.ToString()))
-                    .WithMessage("Contact with phone number '{PropertyValue}' is already exists");
+                .WithMessage("Contact with phone number '{PropertyValue}' is already exists");
         }
     }
 }
