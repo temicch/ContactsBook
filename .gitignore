@@ -338,13 +338,7 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-/WebApplication2/.vscode
-/WebApplication2/ClientApp/dist
-.vscode/launch.json
-.vscode/tasks.json
 
-ContactsBook.WebUI/ClientApp/dist/
+dist/
 
-ContactsBook.WebUI/.vscode/
-
-ContactsBook.WebApi/ContactsBook.WebApi.xml
+src/ContactsBook.WebApi/ContactsBook.WebApi.xml
