@@ -1,5 +1,5 @@
 <template>
-  <button class="person_add" @click="onClick">
+  <button class="person_add" title="Add contact" @click="onClick">
     <AddIcon />
   </button>
 </template>

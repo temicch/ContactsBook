@@ -1,6 +1,10 @@
 <template>
   <label class="search">
-    <button class="search__execute_button" @click="emitInputTrigger">
+    <button
+      class="search__execute_button"
+      title="Search contact"
+      @click="emitInputTrigger"
+    >
       <SearchIcon />
     </button>
     <input
@@ -15,6 +19,7 @@
       v-if="isClearButtonVisible"
       class="search__clear_button"
       @click="onClick"
+      title="Clear input"
     >
       <CloseIcon />
     </button>

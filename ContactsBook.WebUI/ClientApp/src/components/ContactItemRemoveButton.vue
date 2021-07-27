@@ -1,5 +1,10 @@
 <template>
-  <button type="button" @click.prevent.stop="onClick" class="contact__remove">
+  <button
+    type="button"
+    @click.prevent.stop="onClick"
+    title="Remove contact"
+    class="contact__remove"
+  >
     <CloseIcon />
   </button>
 </template>
