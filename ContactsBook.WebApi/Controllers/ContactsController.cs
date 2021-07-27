@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using ContactsBook.Application.Interfaces.Models;
@@ -137,7 +137,7 @@ namespace ContactsBook.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(Guid id)
         {
-            if (_contactsService.GetContactByIdAsync(id) == null)
+            if (await _contactsService.GetContactByIdAsync(id) == null)
                 return NotFound();
 
             var result = await _contactsService.RemoveContactByIdAsync(id);
