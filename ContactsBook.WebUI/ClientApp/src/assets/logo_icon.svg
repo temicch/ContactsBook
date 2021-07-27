@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 211.38 301.41">
+  <defs>
+    <linearGradient id="linear-gradient" y1="117.43" x2="211.38" y2="117.43" gradientUnits="userSpaceOnUse">
+      <stop offset="0.2" stop-color="#1a82b6"/>
+      <stop offset="0.31" stop-color="#1f8dc4"/>
+      <stop offset="0.47" stop-color="#2599d2"/>
+      <stop offset="0.67" stop-color="#28a0da"/>
+      <stop offset="1" stop-color="#29a2dd"/>
+      <stop offset="1" stop-color="#2aa4e0"/>
+    </linearGradient>
+  </defs>
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="Layer_2-2" data-name="Layer 2">
+      <g>
+        <path d="M210,33.09C202.11,14.35,158.48,0,105.69,0,47.32,0,0,17.53,0,39.14c0,.37.12.73.15,1.1A9.35,9.35,0,0,0,0,41.66V233l155.58,1.89c0-14.28,12-25.86,26.83-25.86h29V36.49A5,5,0,0,0,210,33.09Z" style="fill: url(#linear-gradient)"/>
+        <path d="M211.38,260.87a1.39,1.39,0,0,1-1.37,1.4H26.82c-15,0-27.07-12.52-26.82-27.87a27.39,27.39,0,0,1,27.27-26.93H210a1.38,1.38,0,0,1,1.37,1.39h0a1.42,1.42,0,0,1-.8,1.27,27.65,27.65,0,0,0,0,49.47,1.43,1.43,0,0,1,.8,1.27Z" style="fill: #f8c087"/>
+        <path d="M54.35,262.27H27.18a27.4,27.4,0,1,1,.44-54.8H54.8a27.4,27.4,0,0,0-.45,54.8Z" style="fill: #ef9f67"/>
+        <path d="M99.22,301.27h0a45.81,45.81,0,0,0-34,0h0a1.84,1.84,0,0,1-2.56-1.65V231h39.15v68.67A1.84,1.84,0,0,1,99.22,301.27Z" style="fill: #ff4040"/>
+        <path d="M78.29,298.22a49.21,49.21,0,0,0-13,3h0a1.91,1.91,0,0,1-2.66-1.65V231H78.29v67.27Z" style="fill: #ed3c3c"/>
+        <!-- <rect x="39.14" y="50.89" width="140.92" height="101.78" rx="4.65" style="fill: #e7e8ec"/>
+        <rect x="46.97" y="54.8" width="133.09" height="101.78" rx="4.16" style="fill: #fafbfc"/> -->
+        <!-- <ellipse cx="74.37" cy="93.95" rx="3.91" ry="15.66" style="stroke: #000;stroke-miterlimit: 10;opacity: 0.6000000000000001"/>
+        <ellipse cx="152.66" cy="93.95" rx="3.91" ry="15.66" style="stroke: #000;stroke-miterlimit: 10;opacity: 0.6000000000000001"/>
+        <path d="M133.09,113.52c0,4.29-8.83,7.83-19.57,7.83S94,117.81,94,113.52" style="fill: none;stroke: #000;stroke-linecap: round;stroke-linejoin: round;opacity: 0.6000000000000001"/> -->
+      </g>
+    </g>
+  </g>
+</svg>

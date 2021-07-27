@@ -9,6 +9,7 @@ import "./styles/index.scss";
 import store from "./store";
 import ContactsModule from "./store/modules/contacts";
 import InfinityList from "./components/InfinityList.vue";
+import LogoIcon from "@/assets/logo_icon.svg";
 
 import ContactsCreator from "./components/ContactsCreator.vue";
 import ContactsEditor from "./components/ContactsEditor.vue";
@@ -20,6 +21,14 @@ import ContactsSearchModule from "./store/modules/contactsSearch";
 
 Vue.use(VueFinalModal());
 Vue.use(Notifications);
+
+new Vue({
+  el: "#header",
+  name: "header",
+  components: {
+    LogoIcon
+  }
+})
 
 new Vue({
   el: "#main",
