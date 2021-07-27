@@ -14,8 +14,6 @@
 @media (max-width: 768px) {
   .wrapper {
     max-width: inherit;
-    height: 100vh;
-    overflow: auto;
     padding: inherit;
 
     &__top {
@@ -23,9 +21,13 @@
       width: 100%;
     }
 
+    &__middle {
+      min-height: 90vh;
+    }
+
     &__middle .infinity_list {
       padding-top: 2 * $header_height;
-      padding-bottom: $header_height;
+      margin-bottom: $header_height + 20px;
     }
 
     &__bottom {
