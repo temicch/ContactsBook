@@ -251,5 +251,31 @@ namespace ContactsBook.Application.IntegrationTests
             contactAddResult.Should().NotBe(default);
             isPhoneExists.Should().BeTrue();
         }
+
+        [Fact]
+        public async Task Added_Multiple_Contacts_And_Then_All_Deleted()
+        {
+            // Assign
+            var contacts = this.GetSomeContacts(10).ToList();
+
+            // Act
+            foreach (var contact in contacts)
+            {
+                var contactId = await _contactsService.AddContactAsync(contact);
+                contact.Id = contactId;
+            }
+
+            var addedContacts = await _contactsService.GetContactsAsync(new LimitationParameters());
+            foreach (var contactId in contacts.Select(contact => contact.Id))
+            {
+                var result = await _contactsService.RemoveContactByIdAsync(contactId);
+            }
+
+            var contactsAfterRemove = await _contactsService.GetContactsAsync(new LimitationParameters());
+
+            // Assert
+            addedContacts.TotalCount.Should().Be(10);
+            contactsAfterRemove.TotalCount.Should().Be(0);
+        }
     }
 }
