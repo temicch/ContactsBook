@@ -9,7 +9,8 @@ namespace ContactsBook.WebApi
     {
         public WebApiMapping()
         {
-            CreateMap<CreateContactRequest, ContactDto>();
+            CreateMap<CreateContactRequest, ContactDto>()
+                .ForMember(dest => dest.Id, src => src.Ignore());
             CreateMap<UpdateContactRequest, ContactDto>();
             CreateMap<ContactDto, GetContactResponse>()
                 .ForMember(dest => dest.Response, src => src.MapFrom(src => src));
