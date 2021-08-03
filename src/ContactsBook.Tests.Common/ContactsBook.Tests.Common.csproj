@@ -7,6 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -23,6 +36,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ContactsBook.Application.Interfaces\ContactsBook.Application.Interfaces.csproj" />
     <ProjectReference Include="..\ContactsBook.DataAccess\ContactsBook.DataAccess.MsSql.csproj" />
+    <ProjectReference Include="..\ContactsBook.WebApi\ContactsBook.WebApi.csproj" />
   </ItemGroup>
 
 </Project>
