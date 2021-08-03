@@ -1,0 +1,32 @@
+.vue-notification {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+
+  opacity: 90%;
+  font-size: 14px;
+  min-height: 70px;
+  background: white;
+  color: black;
+
+  padding-left: 20px;
+
+  box-shadow: 0px 5px 10px 2px rgb(34 60 80 / 20%);
+  border-radius: 8px;
+  border: $steel_gray_80 1px solid;
+  border-left: 5px #f48a06 solid;
+
+  .notification-title {
+    font-weight: 400;
+  }
+}
+
+.vue-notification.warn {
+  background-color: white;
+}
+.vue-notification.error {
+  background-color: white;
+}
+.vue-notification.success {
+  background-color: white;
+}

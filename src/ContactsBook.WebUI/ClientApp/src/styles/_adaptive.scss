@@ -1,0 +1,63 @@
+@media (max-width: 375px) {
+  .contact {
+    &__top {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    &__right_side {
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    max-width: inherit;
+    padding: inherit;
+
+    &__top {
+      position: fixed;
+      width: 100%;
+    }
+
+    &__middle {
+      min-height: 90vh;
+    }
+
+    &__middle .infinity_list {
+      padding-top: 2 * $header_height;
+      margin-bottom: $header_height + 20px;
+    }
+
+    &__bottom {
+      position: fixed;
+      width: 100%;
+      bottom: 10px;
+
+      .person_add {
+        position: static;
+        margin: 0 auto;
+        height: $header_height;
+        padding: 16px;
+        width: 98%;
+
+        border-radius: 10px;
+        opacity: 1;
+      }
+    }
+  }
+
+  .contact {
+    padding-left: 10px;
+    
+    &__remove {
+      visibility: visible;
+      border: 1px black solid;
+      padding: 5px;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}

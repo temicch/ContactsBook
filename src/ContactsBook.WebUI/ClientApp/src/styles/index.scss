@@ -1,0 +1,45 @@
+﻿@import "fonts";
+@import "variables";
+@import "components";
+
+html {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+body {
+  font-family: "Ubuntu", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #edeef0;
+}
+
+.wrapper {
+  max-width: $wrapper_width;
+  margin: 0 auto;
+  padding: ($header_height + 24px) 0 0;
+
+  &__content {
+    box-shadow: 0 1px 0 0 #d3d9de, 0 0 0 1px #e7e8ec;
+    border-radius: 4px 4px 0 0;
+  }
+
+  &__top {
+    position: sticky;
+    top: $header_height + 1px;
+    background-color: white;
+    box-shadow: 0 0 0 1px $steel_gray_80;
+    border-radius: 3px 3px 0 0;
+    z-index: 1;
+  }
+
+  &__middle {
+    background-color: white;
+  }
+
+  &__bottom {
+    z-index: 2;
+  }
+}
+
+@import "adaptive";

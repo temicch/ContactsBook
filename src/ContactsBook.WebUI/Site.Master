@@ -1,0 +1,22 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ContactsBook.WebUI.SiteMaster" %>
+
+<%@ Register Src="~/App_Data/Header.ascx" TagPrefix="cb" TagName="Header" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Contacts book - <%: Page.Title %></title>
+
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+</head>
+<body>
+<cb:Header runat="server" ID="Header"/>
+<form runat="server">
+</form>
+<asp:ContentPlaceHolder ID="MainContent" runat="server">
+</asp:ContentPlaceHolder>
+</body>
+</html>
