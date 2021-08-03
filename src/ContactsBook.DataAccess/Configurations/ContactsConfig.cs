@@ -1,7 +1,5 @@
-﻿using Bogus;
-using ContactsBook.Domain.Entities;
+﻿using ContactsBook.Domain.Entities;
 using ContactsBook.Domain.ValueObjects;
-using ContactsBook.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,13 +8,6 @@ namespace ContactsBook.DataAccess.MsSql.Configurations
     internal class ContactsConfig : IEntityTypeConfiguration<Contact>
     {
         internal const string TABLE_NAME = "Contacts";
-        private const int CONTACTS_SEED_COUNT = 100;
-        private readonly IFakeDataGenerator<Contact> _contactsGenerator;
-
-        public ContactsConfig()
-        {
-            _contactsGenerator = new ContactsSeed(new Faker<Contact>());
-        }
 
         public void Configure(EntityTypeBuilder<Contact> builder)
         {
