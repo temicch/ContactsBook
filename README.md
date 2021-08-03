@@ -2,18 +2,18 @@
 
 Web application for composing a contact book using **[Vue.JS 2][1]** and **[.Net 5][2]**<br>
 
-## Description
+## :blue_book: Description
 <img alt="Logo" align="right" src="img/preview-1.png" width="40%" />
 
 The **backend** of the application is implemented using **[Asp.Net Core (Web Api)][3]**. The application architecture is structured according to **clean architecture**. **[Dapper][4]** is used to access the data.<br>
 **Frontend** is implemented on **[Asp.Net][5]** technology using **[Vue.Js 2][1]**. **[Vuex][6]** is used to monitor the state of the application. For pagination, the "infinite loading" approach is used. Used **[Typescript][7]** for typing the application.
 
-## Requirements
+## :name_badge: Requirements
  - [.Net 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
  - [Node.js](https://nodejs.org/en/)
  - [Yarn](https://yarnpkg.com/)
  
-## Local Run
+## :zap: Local Run
 The project has the following directory structure:
 ```
 ContactsBook
