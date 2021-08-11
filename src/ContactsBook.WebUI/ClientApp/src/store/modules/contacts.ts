@@ -3,7 +3,7 @@ import {
   Module,
   Action,
   Mutation,
-  getModule,
+  getModule
 } from "vuex-module-decorators";
 
 import store from "@/store";
@@ -24,7 +24,7 @@ export class Contacts extends VuexModule implements ContactsState {
     totalPages: 0,
     hasPreviousPage: false,
     hasNextPage: false,
-    isPageExists: true,
+    isPageExists: true
   };
 
   @Mutation
@@ -68,7 +68,7 @@ export class Contacts extends VuexModule implements ContactsState {
       pageIndex: payload.pageIndex ?? this.paginatedParams.pageIndex,
       pageSize: payload.pageSize ?? this.paginatedParams.pageSize,
       totalPages: payload.totalPages ?? this.paginatedParams.totalPages,
-      totalCount: payload.totalCount ?? this.paginatedParams.totalCount,
+      totalCount: payload.totalCount ?? this.paginatedParams.totalCount
     };
   }
 
@@ -82,7 +82,7 @@ export class Contacts extends VuexModule implements ContactsState {
     this.LOADING_STATE_SET({ isLoading: true });
     return await this.fetchContacts({
       pageIndex: this.paginatedParams.pageIndex,
-      isPush: false,
+      isPush: false
     }).finally(() => {
       this.LOADING_STATE_SET({ isLoading: false });
     });
@@ -114,7 +114,7 @@ export class Contacts extends VuexModule implements ContactsState {
 
     await this.reloadPaginatedParams({
       pageIndex: this.paginatedParams.pageIndex,
-      pageSize: this.paginatedParams.pageSize,
+      pageSize: this.paginatedParams.pageSize
     });
 
     if (hasNextPage == false && this.paginatedParams.hasNextPage == true)
@@ -146,7 +146,7 @@ export class Contacts extends VuexModule implements ContactsState {
           pageIndex:
             this.paginatedParams.pageSize *
               (this.paginatedParams.pageIndex + 1) -
-            1,
+            1
         });
         await this.reloadPaginatedParams({ pageIndex, pageSize });
       }
@@ -156,7 +156,7 @@ export class Contacts extends VuexModule implements ContactsState {
   @Action
   public async RemoveContact(contactId: string): Promise<void> {
     await this.apiProvider.Remove(contactId).then(async () => {
-      const position = this.items.map((x) => x.id).indexOf(contactId);
+      const position = this.items.map(x => x.id).indexOf(contactId);
 
       if (position == -1) return;
 
@@ -170,14 +170,14 @@ export class Contacts extends VuexModule implements ContactsState {
           pageIndex:
             this.paginatedParams.pageSize *
               (this.paginatedParams.pageIndex + 1) -
-            1,
+            1
         });
       }
 
       await this.reloadPaginatedParams({ pageIndex, pageSize });
       if (this.paginatedParams.pageIndex >= this.paginatedParams.totalPages)
         this.PAGINATED_PARAMS_SET({
-          pageIndex: this.paginatedParams.totalPages - 1,
+          pageIndex: this.paginatedParams.totalPages - 1
         });
     });
   }
@@ -196,7 +196,7 @@ export class Contacts extends VuexModule implements ContactsState {
 
     await this.fetchContacts({
       pageIndex: this.paginatedParams.pageIndex + 1,
-      isPush: true,
+      isPush: true
     });
 
     return true;
@@ -228,7 +228,7 @@ export class Contacts extends VuexModule implements ContactsState {
   }) {
     return await this.apiProvider
       .GetAll(payload.pageIndex, payload.pageSize)
-      .then((response) => {
+      .then(response => {
         this.PAGINATED_PARAMS_SET(response);
       });
   }
@@ -244,7 +244,7 @@ export class Contacts extends VuexModule implements ContactsState {
         payload.pageIndex,
         payload.pageSize || this.paginatedParams.pageSize
       )
-      .then((response) => {
+      .then(response => {
         if (!payload.isPush) {
           this.CONTACTS_SET({ contacts: response.items });
           this.PAGINATED_PARAMS_SET(response);

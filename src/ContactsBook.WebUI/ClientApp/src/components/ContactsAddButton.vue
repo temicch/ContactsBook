@@ -11,12 +11,12 @@ import AddIcon from "@/assets/add_icon.svg";
 
 export default Vue.extend({
   components: {
-    AddIcon,
+    AddIcon
   },
   methods: {
     onClick() {
       this.$emit("click");
-    },
-  },
+    }
+  }
 });
 </script>

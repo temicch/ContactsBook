@@ -49,7 +49,12 @@ interface PaginatedParams {
 
 interface ApiProvider<T> {
   Get(id: string): Promise<T>;
-  GetAll(pageIndex?: number, pageSize?: number, name?: string, phoneNumber?: string): Promise<PaginatedList<T>>;
+  GetAll(
+    pageIndex?: number,
+    pageSize?: number,
+    name?: string,
+    phoneNumber?: string
+  ): Promise<PaginatedList<T>>;
   Remove(id: string): Promise<void>;
   Create<Response>(item: T): Promise<Response>;
   Update(item: T): Promise<void>;

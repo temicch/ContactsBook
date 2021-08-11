@@ -21,7 +21,7 @@ import ContactItemModal from "./ContactItemModal.vue";
 
 export default Vue.extend({
   components: {
-    ContactItemModal,
+    ContactItemModal
   },
   data: () => ({
     showModal: false,
@@ -31,8 +31,8 @@ export default Vue.extend({
       id: "",
       name: "",
       email: "",
-      phoneNumber: 0,
-    } as Contact,
+      phoneNumber: 0
+    } as Contact
   }),
   methods: {
     onItemClick({ ...contact }: Contact) {
@@ -47,24 +47,24 @@ export default Vue.extend({
     async onSubmit(contact: Contact) {
       this.isModalDisabled = true;
       await ContactsModule.UpdateContact(contact)
-        .then(async (response) => {
+        .then(async response => {
           this.$notify({ title: "Contact edited", type: "success" });
           this.$emit("contact-edited", contact);
           this.onModalClose();
         })
-        .catch((error) => {
+        .catch(error => {
           this.errors = error.response.data.errors;
           this.$notify({
             title:
               "There was an error on editing contact. Please try again later",
-            type: "error",
+            type: "error"
           });
           if (this.errors == undefined) throw error;
         })
         .finally(() => {
           this.isModalDisabled = false;
         });
-    },
-  },
+    }
+  }
 });
 </script>

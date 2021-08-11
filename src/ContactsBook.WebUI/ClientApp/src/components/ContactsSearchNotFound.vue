@@ -15,7 +15,7 @@ import NotFoundIcon from "../assets/search_not_found_icon.svg";
 
 export default Vue.extend({
   components: {
-    NotFoundIcon,
-  },
+    NotFoundIcon
+  }
 });
 </script>

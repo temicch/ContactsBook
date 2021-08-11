@@ -35,10 +35,10 @@ import CloseIcon from "@/assets/close_icon.svg";
 export default Vue.extend({
   components: {
     SearchIcon,
-    CloseIcon,
+    CloseIcon
   },
   data: () => ({
-    inputText: "",
+    inputText: ""
   }),
   methods: {
     onClick() {
@@ -51,12 +51,12 @@ export default Vue.extend({
     onEscPress() {
       this.inputText = "";
       this.$emit("input-trigger", this.inputText);
-    },
+    }
   },
   computed: {
     isClearButtonVisible() {
       return this.inputText.length > 0;
-    },
-  },
+    }
+  }
 });
 </script>

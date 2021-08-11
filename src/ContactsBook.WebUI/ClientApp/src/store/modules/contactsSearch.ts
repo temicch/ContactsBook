@@ -3,7 +3,7 @@ import {
   getModule,
   VuexModule,
   Action,
-  Mutation,
+  Mutation
 } from "vuex-module-decorators";
 
 import store from "@/store";
@@ -24,7 +24,7 @@ export class ContactsSearch extends VuexModule implements ContactsSearchState {
     totalPages: 0,
     hasPreviousPage: false,
     hasNextPage: false,
-    isPageExists: true,
+    isPageExists: true
   };
 
   @Mutation
@@ -58,7 +58,7 @@ export class ContactsSearch extends VuexModule implements ContactsSearchState {
       pageIndex: payload.pageIndex ?? this.paginatedParams.pageIndex,
       pageSize: payload.pageSize ?? this.paginatedParams.pageSize,
       totalPages: payload.totalPages ?? this.paginatedParams.totalPages,
-      totalCount: payload.totalCount ?? this.paginatedParams.totalCount,
+      totalCount: payload.totalCount ?? this.paginatedParams.totalCount
     };
   }
 
@@ -71,7 +71,7 @@ export class ContactsSearch extends VuexModule implements ContactsSearchState {
   public async RemoveContact(contactId: string): Promise<void> {
     if (this.searchPhrase.length < 3) return;
 
-    const position = this.items.map((x) => x.id).indexOf(contactId);
+    const position = this.items.map(x => x.id).indexOf(contactId);
 
     if (position == -1) return;
 
@@ -84,14 +84,14 @@ export class ContactsSearch extends VuexModule implements ContactsSearchState {
         isPush: true,
         pageIndex:
           this.paginatedParams.pageSize * (this.paginatedParams.pageIndex + 1) -
-          1,
+          1
       });
     }
 
     await this.reloadPaginatedParams({ pageIndex, pageSize });
     if (this.paginatedParams.pageIndex >= this.paginatedParams.totalPages)
       this.PAGINATED_PARAMS_SET({
-        pageIndex: this.paginatedParams.totalPages - 1,
+        pageIndex: this.paginatedParams.totalPages - 1
       });
   }
 
@@ -122,7 +122,7 @@ export class ContactsSearch extends VuexModule implements ContactsSearchState {
 
     await this.fetchContacts({
       pageIndex: this.paginatedParams.pageIndex + 1,
-      isPush: true,
+      isPush: true
     });
 
     return true;
@@ -135,7 +135,7 @@ export class ContactsSearch extends VuexModule implements ContactsSearchState {
   }) {
     return await this.apiProvider
       .GetAll(payload.pageIndex, payload.pageSize)
-      .then((response) => {
+      .then(response => {
         this.PAGINATED_PARAMS_SET(response);
       });
   }
@@ -153,7 +153,7 @@ export class ContactsSearch extends VuexModule implements ContactsSearchState {
         this.searchPhrase,
         this.searchPhrase
       )
-      .then((response) => {
+      .then(response => {
         if (!payload.isPush) {
           this.CONTACTS_SET({ contacts: response.items });
           this.PAGINATED_PARAMS_SET(response);
