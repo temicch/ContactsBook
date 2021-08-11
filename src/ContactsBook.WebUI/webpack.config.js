@@ -1,5 +1,4 @@
 const path = require("path");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 var webpack = require("webpack");
@@ -12,6 +11,7 @@ let config = {
     path: path.resolve(__dirname, "ClientApp/dist"),
     publicPath: "/styles",
     filename: "[name].js",
+    clean: true
   },
   resolve: {
     alias: {
@@ -66,7 +66,6 @@ let config = {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new CleanWebpackPlugin(),
     new webpack.DefinePlugin({
       "process.env.BUILD": JSON.stringify("web"),
     }),
