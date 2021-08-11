@@ -23,7 +23,7 @@ import ContactItemModal from "./ContactItemModal.vue";
 export default Vue.extend({
   components: {
     ContactsAddButton,
-    ContactItemModal,
+    ContactItemModal
   },
   data: () => ({
     showModal: false,
@@ -33,8 +33,8 @@ export default Vue.extend({
       id: "",
       name: "",
       email: "",
-      phoneNumber: 7,
-    } as Contact,
+      phoneNumber: 7
+    } as Contact
   }),
   methods: {
     onAddButtonClick() {
@@ -51,30 +51,30 @@ export default Vue.extend({
         id: "",
         name: "",
         email: "",
-        phoneNumber: 7,
+        phoneNumber: 7
       };
     },
     async onSubmit(contact: Contact) {
       this.isModalDisabled = true;
       await ContactsModule.CreateContact(contact)
-        .then(async (response) => {
+        .then(async response => {
           this.$notify({ title: "Contact created", type: "success" });
           this.$emit("contact-created", contact);
           this.onModalClose();
         })
-        .catch((error) => {
+        .catch(error => {
           this.errors = error.response.data.errors;
           this.$notify({
             title:
               "There was an error on creating contact. Please try again later",
-            type: "error",
+            type: "error"
           });
           if (this.errors == undefined) throw error;
         })
         .finally(() => {
           this.isModalDisabled = false;
         });
-    },
-  },
+    }
+  }
 });
 </script>

@@ -11,28 +11,16 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": "./ClientApp/src/",
-    "types": [
-      "node",
-      "webpack-env"
-    ],
+    "types": ["node", "webpack-env"],
     "paths": {
-      "@/*": [
-        "*"
-      ]
+      "@/*": ["*"]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ],
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
     "ClientApp/src/**/*.vue",
     "ClientApp/src/**/*.ts",
-    "ClientApp/src/**/*.tsx",
+    "ClientApp/src/**/*.tsx"
   ],
-  "exclude": [
-    "node_modules"    
-  ]
+  "exclude": ["node_modules"]
 }

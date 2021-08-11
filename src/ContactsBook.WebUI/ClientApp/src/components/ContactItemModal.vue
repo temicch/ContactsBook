@@ -85,38 +85,38 @@ import CloseIcon from "@/assets/close_icon.svg";
 export default Vue.extend({
   components: {
     Avatar,
-    CloseIcon,
+    CloseIcon
   },
   data() {
     return {
       phoneMask: {
         mask: "+0 (000) 000 00 00",
-        lazy: false,
+        lazy: false
       },
-      phoneNumberMasked: "",
+      phoneNumberMasked: ""
     };
   },
   props: {
     contact: {
       type: Object as () => Contact,
-      required: true,
+      required: true
     },
     modalTitle: {
       type: String,
-      required: true,
+      required: true
     },
     visible: {
       type: Boolean,
-      default: false,
+      default: false
     },
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     errors: {
       type: Object,
-      default: {},
-    },
+      default: {}
+    }
   },
   mixins: [validationMixin],
   validations: {
@@ -124,16 +124,16 @@ export default Vue.extend({
       name: {
         required,
         minLength: minLength(3),
-        maxLength: maxLength(28),
+        maxLength: maxLength(28)
       },
       phoneNumber: {
         required,
-        isCorrectPhoneNumber,
+        isCorrectPhoneNumber
       },
       email: {
-        isCorrectEmail,
-      },
-    },
+        isCorrectEmail
+      }
+    }
   },
   methods: {
     onSubmit() {
@@ -157,7 +157,7 @@ export default Vue.extend({
     },
     onModalOpening() {
       this.$v.$reset();
-    },
+    }
   },
   computed: {
     phoneInput(): string {
@@ -196,10 +196,10 @@ export default Vue.extend({
           error = "Please enter a valid phone number";
       }
       return error;
-    },
+    }
   },
   directives: {
-    imask: IMaskDirective,
-  },
+    imask: IMaskDirective
+  }
 });
 </script>

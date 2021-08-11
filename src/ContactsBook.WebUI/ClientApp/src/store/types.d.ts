@@ -1,8 +1,8 @@
 type ContactsState = {
-    items: Contact[],
-    paginatedParams: PaginatedParams,
-    loading: boolean
-}
+  items: Contact[];
+  paginatedParams: PaginatedParams;
+  loading: boolean;
+};
 type ContactsSearchState = ContactsState & {
-    searchPhrase: string
+  searchPhrase: string;
 };

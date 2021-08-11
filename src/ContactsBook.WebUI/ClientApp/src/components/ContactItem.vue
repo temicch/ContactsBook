@@ -46,10 +46,10 @@ export default Vue.extend({
     Avatar,
     ContactItemRemoveButton,
     EmailIcon,
-    PhoneIcon,
+    PhoneIcon
   },
   props: {
-    contact: Object as PropType<Contact>,
+    contact: Object as PropType<Contact>
   },
   methods: {
     onRemoveButtonClick(contactId: string) {
@@ -57,10 +57,10 @@ export default Vue.extend({
     },
     onClick() {
       this.$emit("click", this.contact.id);
-    },
+    }
   },
   filters: {
-    phoneNumber: phoneNumberFilter,
-  },
+    phoneNumber: phoneNumberFilter
+  }
 });
 </script>

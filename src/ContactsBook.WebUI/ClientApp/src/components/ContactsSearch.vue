@@ -41,11 +41,11 @@ export default Vue.extend({
     ContactsSearchInput,
     ContactsSearchNotFound,
     ContactItem,
-    InfinityList,
+    InfinityList
   },
   data: () => ({
     isListVisible: false,
-    loaderTrigger: 0,
+    loaderTrigger: 0
   }),
   methods: {
     async onInput(value: string) {
@@ -66,11 +66,11 @@ export default Vue.extend({
     async onEndReached() {
       let isEndReached = false;
       await ContactsSearchModule.NextPage()
-        .then((result) => {
+        .then(result => {
           if (result) isEndReached = false;
           else isEndReached = true;
         })
-        .catch((error) => {
+        .catch(error => {
           isEndReached = true;
           throw error;
         });
@@ -81,7 +81,7 @@ export default Vue.extend({
     },
     onRemoveClick(id: string) {
       this.$emit("contact-remove", id);
-    },
+    }
   },
   computed: {
     loading(): boolean {
@@ -89,7 +89,7 @@ export default Vue.extend({
     },
     contacts(): Contact[] {
       return ContactsSearchModule.items;
-    },
-  },
+    }
+  }
 });
 </script>
