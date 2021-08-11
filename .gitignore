@@ -342,3 +342,5 @@ healthchecksdb
 dist/
 
 src/ContactsBook.WebApi/ContactsBook.WebApi.xml
+
+clean_packages.bat

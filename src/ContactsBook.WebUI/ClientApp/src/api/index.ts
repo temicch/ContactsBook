@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from "axios";
 
 export default class ContactsApiProvider implements ApiProvider<Contact> {
   public static conduitApi: AxiosInstance = axios.create({
-    baseURL: "https://192.168.1.212:45455/api",
+    baseURL: "https://localhost:44362/api"
   });
 
   async GetAll(
@@ -14,29 +14,30 @@ export default class ContactsApiProvider implements ApiProvider<Contact> {
   ): Promise<PaginatedList<Contact>> {
     const request: GetContactsRequest = {
       pageSize: pageSize,
-      pageIndex: pageIndex,
+      pageIndex: pageIndex
     };
 
     if (name != null) request.name = name;
-    if (phoneNumber != null && isContainsOnlyDigits(phoneNumber)) request.phoneNumber = phoneNumber;
+    if (phoneNumber != null && isContainsOnlyDigits(phoneNumber))
+      request.phoneNumber = phoneNumber;
 
     return await ContactsApiProvider.conduitApi
       .get("/contacts", {
-        params: request,
+        params: request
       })
-      .then((result) => result.data.response);
+      .then(result => result.data.response);
   }
 
   async Get(id: string): Promise<Contact> {
     const request: GetContactRequest = {
-      id,
+      id
     };
 
     return await ContactsApiProvider.conduitApi
       .get(`/contacts/${request.id}`, {
-        params: request,
+        params: request
       })
-      .then((response) => response.data.response);
+      .then(response => response.data.response);
   }
 
   async Remove(contactId: string): Promise<void> {
@@ -50,12 +51,12 @@ export default class ContactsApiProvider implements ApiProvider<Contact> {
   ): Promise<CreateContactResponse> {
     return await ContactsApiProvider.conduitApi
       .post(`/contacts`, contact)
-      .then((response) => response.data);
+      .then(response => response.data);
   }
 
   async Update(contact: Contact): Promise<void> {
     const request: UpdateContactsRequest = {
-      ...contact,
+      ...contact
     };
 
     return await ContactsApiProvider.conduitApi.put(

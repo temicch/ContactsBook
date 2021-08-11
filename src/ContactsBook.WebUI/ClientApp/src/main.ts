@@ -28,7 +28,7 @@ new Vue({
   components: {
     LogoIcon
   }
-})
+});
 
 new Vue({
   el: "#main",
@@ -42,7 +42,7 @@ new Vue({
     ContactsCreator,
     ContactsEditor,
 
-    ContactItem,
+    ContactItem
   },
   async mounted() {
     await ContactsModule.LoadContacts();
@@ -50,14 +50,14 @@ new Vue({
   methods: {
     async removeContact(contactId: string) {
       await ContactsModule.RemoveContact(contactId)
-        .then(async (response) => {
+        .then(async response => {
           await ContactsSearchModule.RemoveContact(contactId);
         })
-        .catch((error) => {
+        .catch(error => {
           this.$notify({
             title:
               "There was an error on removing contact. Please try again later",
-            type: "error",
+            type: "error"
           });
           throw error;
         });
@@ -66,11 +66,11 @@ new Vue({
     async onEndReached() {
       let isEndReached = false;
       await ContactsModule.NextPage()
-        .then((result) => {
+        .then(result => {
           if (result) isEndReached = false;
           else isEndReached = true;
         })
-        .catch((error) => {
+        .catch(error => {
           isEndReached = true;
           throw error;
         });
@@ -83,7 +83,7 @@ new Vue({
 
     async onContactCreated(contact: Contact) {
       ContactsSearchModule.CreateContact(contact);
-    },
+    }
   },
   computed: {
     loading(): boolean {
@@ -91,6 +91,6 @@ new Vue({
     },
     contacts(): Contact[] {
       return ContactsModule.items;
-    },
-  },
+    }
+  }
 });

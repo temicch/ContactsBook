@@ -16,12 +16,12 @@ import CloseIcon from "@/assets/close_icon.svg";
 
 export default Vue.extend({
   components: {
-    CloseIcon,
+    CloseIcon
   },
   methods: {
     onClick() {
       this.$emit("click");
-    },
-  },
+    }
+  }
 });
 </script>

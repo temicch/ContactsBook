@@ -32,27 +32,27 @@ import BaseLoader from "./BaseLoader.vue";
 export default Vue.extend({
   components: {
     InfiniteLoading,
-    BaseLoader,
+    BaseLoader
   },
   props: {
     items: {
       type: Array,
-      required: true,
+      required: true
     },
     loaderTrigger: {
       type: Number,
       required: false,
-      default: +new Date(),
+      default: +new Date()
     },
     loading: {
       type: Boolean,
       required: true,
-      default: true,
+      default: true
     },
     // Not a good idea, but 'vue-infinite-loading' has so ugly API, so...
     asyncFunc: {
-      type: Function,
-    },
+      type: Function
+    }
   },
 
   methods: {
@@ -63,7 +63,7 @@ export default Vue.extend({
           else $state.loaded();
         })
         .catch(() => $state.error());
-    },
-  },
+    }
+  }
 });
 </script>
