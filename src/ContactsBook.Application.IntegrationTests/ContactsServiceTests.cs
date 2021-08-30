@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ContactsBook.Application.Interfaces.Models;
 using ContactsBook.Application.Interfaces.Services;
 using ContactsBook.Application.PagedList;
@@ -14,6 +10,10 @@ using ContactsBook.WebApi;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ContactsBook.Application.IntegrationTests
@@ -53,7 +53,7 @@ namespace ContactsBook.Application.IntegrationTests
         public async Task Contact_With_The_Same_Phone_Cant_Be_Created()
         {
             // Assign
-            var contacts = this.GetSomeContacts(2).WithPhones(new[] {91345678910, 91345678910}).ToList();
+            var contacts = this.GetSomeContacts(2).WithPhones(new[] { 91345678910, 91345678910 }).ToList();
 
             // Act
             var isContactA_Created = await _contactsService.AddContactAsync(contacts[0]);
@@ -168,7 +168,8 @@ namespace ContactsBook.Application.IntegrationTests
                 .GetContactByPhoneNumberAsync(contactDto.PhoneNumber.ToString());
 
             // Assert
-            contact.Should().NotBe(default);
+            contact.Should().NotBeEmpty();
+            //contact.Should().NotBe(default);
             updateResult.Should().BeTrue();
             updatedContact.Name.Should().Be(contactNewName);
             updatedContact.PhoneNumber.Should().Be(contactNewPhoneNumber);
@@ -189,8 +190,8 @@ namespace ContactsBook.Application.IntegrationTests
             var updateContact2DtoResult = await _contactsService.UpdateContactAsync(contacts[1]);
 
             // Assert
-            contact1.Should().NotBe(default);
-            contact2.Should().NotBe(default);
+            contact1.Should().NotBeEmpty();
+            contact2.Should().NotBeEmpty();
             updateContact2DtoResult.Should().BeFalse();
         }
 
@@ -198,7 +199,7 @@ namespace ContactsBook.Application.IntegrationTests
         public async Task Find_Contacts_By_Part_Of_Phone_Number()
         {
             //Assign
-            var phoneNumbers = new[] {70000000000, 71111111111, 70000010000};
+            var phoneNumbers = new[] { 70000000000, 71111111111, 70000010000 };
             var contacts = this.GetSomeContacts(phoneNumbers.Length)
                 .WithPhones(phoneNumbers);
             foreach (var contact in contacts)
@@ -248,7 +249,7 @@ namespace ContactsBook.Application.IntegrationTests
             var isPhoneExists = await _contactsService.IsPhoneNumberExistsAsync(contact.PhoneNumber.ToString());
 
             //Assert
-            contactAddResult.Should().NotBe(default);
+            contactAddResult.Should().NotBeEmpty();
             isPhoneExists.Should().BeTrue();
         }
 

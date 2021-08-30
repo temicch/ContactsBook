@@ -31,7 +31,6 @@ new Vue({
 });
 
 new Vue({
-  el: "#main",
   store,
   components: {
     Avatar,
@@ -93,4 +92,4 @@ new Vue({
       return ContactsModule.items;
     }
   }
-});
+}).$mount("#main");
