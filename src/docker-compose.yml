@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  contactsbook.webui:
+    image: ${DOCKER_REGISTRY-}contactsbookwebui
+    build:
+      context: .\ContactsBook.WebUI
+      dockerfile: Dockerfile
+
+  contactsbook.webapi:
+    image: ${DOCKER_REGISTRY-}contactsbookwebapi
+    ports:
+      - "44362:443"
+    build:
+      context: .
+      dockerfile: ContactsBook.WebApi\Dockerfile
+    depends_on:
+      - db
+  db:
+    image: mywrm/mssql-server-windows-express
+    ports:
+      - "${DOCKER_SQL_PORT:-1433}:1433"
+    expose:  
+      - 1433  
+    environment:
+      SA_PASSWORD: "contacts_book03"
+      ACCEPT_EULA: "Y"
