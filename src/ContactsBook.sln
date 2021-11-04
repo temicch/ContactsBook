@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsBook.WebUI", "ContactsBook.WebUI\ContactsBook.WebUI.csproj", "{C4E7E73C-03D2-4682-8811-7A1EFD73D938}"
 EndProject
@@ -34,6 +34,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9EC280FC-A627-4B5A-8108-FC5FB9C69913}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4F6AF0B2-4DAA-4D94-9996-52FF2AAFDC73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +91,10 @@ Global
 		{3FE8BD54-33FB-4D57-8BBF-161EED1E0B4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FE8BD54-33FB-4D57-8BBF-161EED1E0B4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FE8BD54-33FB-4D57-8BBF-161EED1E0B4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F6AF0B2-4DAA-4D94-9996-52FF2AAFDC73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F6AF0B2-4DAA-4D94-9996-52FF2AAFDC73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F6AF0B2-4DAA-4D94-9996-52FF2AAFDC73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F6AF0B2-4DAA-4D94-9996-52FF2AAFDC73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

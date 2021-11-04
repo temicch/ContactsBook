@@ -36,6 +36,6 @@ namespace ContactsBook.Application.PagedList
         public bool HasNextPage => PageIndex + 1 < TotalPages;
         public bool HasPreviousPage => PageIndex > 0;
         public bool IsPageExists => PageIndex < TotalPages;
-        public IList<T> Items { get; private set; }
+        public IList<T> Items { get; }
     }
 }
