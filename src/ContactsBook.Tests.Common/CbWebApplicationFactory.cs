@@ -52,6 +52,7 @@ namespace ContactsBook.Tests.Common
 
             context.Database.EnsureDeleted();
             context.Dispose();
+            ServiceProvider.Dispose();
         }
     }
 }

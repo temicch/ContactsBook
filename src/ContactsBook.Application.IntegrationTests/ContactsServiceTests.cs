@@ -46,6 +46,8 @@ namespace ContactsBook.Application.IntegrationTests
         public void Dispose()
         {
             _cbWebApplicationFactory.DbClear();
+            _contactsDbContext?.Dispose();
+            _client?.Dispose();
             _serviceScope.Dispose();
         }
 
