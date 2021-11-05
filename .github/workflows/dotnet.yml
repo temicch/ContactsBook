@@ -21,5 +21,9 @@ jobs:
       working-directory: ./src/ContactsBook.WebApi
       
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build -c Release --no-restore
       working-directory: ./src/ContactsBook.WebApi
+
+    - name: Tests
+      run: dotnet test ContactsBook.sln -c Release
+      working-directory: ./src/
