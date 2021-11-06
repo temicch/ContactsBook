@@ -2,24 +2,52 @@ name: .NET
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, develop ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, develop ]
 
 jobs:
-  build:
-
+  build_api:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+
     - name: Restore dependencies
       run: dotnet restore
+      working-directory: ./src/ContactsBook.WebApi
+      
     - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet build -c Release --no-restore
+      working-directory: ./src/ContactsBook.WebApi
+
+  test:
+    runs-on: ubuntu-latest
+    services:
+      sql:
+        image: mcr.microsoft.com/mssql/server
+        ports:
+          - 1433:1433
+        env:
+          SA_PASSWORD: contacts_book03
+          ACCEPT_EULA: Y
+    steps:
+    - uses: actions/checkout@v2
+    - name: App integration tests
+      run: dotnet test ContactsBook.Application.IntegrationTests --configuration Release
+      working-directory: ./src/
+      env:
+        ConnectionStrings__DefaultConnection: Server=.;Database=ContactsBook;User=sa;Password=contacts_book03;
+        
+    - name: App unit tests
+      run: dotnet test ContactsBook.Application.UnitTests --configuration Release
+      working-directory: ./src/
+      env:
+        ConnectionStrings__DefaultConnection: Server=.;Database=ContactsBook;User=sa;Password=contacts_book03;
+        
+    - name: Domain unit tests
+      run: dotnet test ContactsBook.Domain.UnitTests --configuration Release
+      working-directory: ./src/
