@@ -24,6 +24,20 @@ jobs:
       run: dotnet build -c Release --no-restore
       working-directory: ./src/ContactsBook.WebApi
 
-    - name: Tests
-      run: dotnet test ContactsBook.sln -c Release
+  test:
+    runs-on: windows-latest
+    services:
+      sql:
+        image: mywrm/mssql-server-windows-express
+        ports:
+          - 1433:1433
+        env:
+          SA_PASSWORD: contacts_book03
+          ACCEPT_EULA: Y
+    steps:
+    - uses: actions/checkout@v2
+    - name: run tests
+      run: dotnet test ContactsBook.sln --configuration Release
       working-directory: ./src/
+      env:
+        ConnectionStrings__DefaultConnection: Server=.;Database=CleanArchitectureTestDb;User=sa;Password=contacts_book03;MultipleActiveResultSets=true
