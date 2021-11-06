@@ -37,17 +37,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: App integration tests
-      run: dotnet test .\ContactsBook.Application.IntegrationTests\ --configuration Release
+      run: dotnet test ContactsBook.Application.IntegrationTests --configuration Release
       working-directory: ./src/
       env:
         ConnectionStrings__DefaultConnection: Server=.;Database=ContactsBook;User=sa;Password=contacts_book03;
         
     - name: App unit tests
-      run: dotnet test .\ContactsBook.Application.UnitTests\ --configuration Release
+      run: dotnet test ContactsBook.Application.UnitTests --configuration Release
       working-directory: ./src/
       env:
         ConnectionStrings__DefaultConnection: Server=.;Database=ContactsBook;User=sa;Password=contacts_book03;
         
     - name: Domain unit tests
-      run: dotnet test .\ContactsBook.Domain.UnitTests\ --configuration Release
+      run: dotnet test ContactsBook.Domain.UnitTests --configuration Release
       working-directory: ./src/
