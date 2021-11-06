@@ -27,7 +27,7 @@
     "@types/vuelidate": "^0.7.15",
     "@types/webpack-env": "^1.16.2",
     "css-loader": "^6.2.0",
-    "sass": "^1.38.2",
+    "sass": "^1.43.4",
     "sass-loader": "^12.3.0",
     "style-loader": "^3.2.1",
     "ts-loader": "^9.2.4",
