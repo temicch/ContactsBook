@@ -40,4 +40,4 @@ jobs:
       run: dotnet test ContactsBook.sln --configuration Release
       working-directory: ./src/
       env:
-        ConnectionStrings__DefaultConnection: Server=.;Database=CleanArchitectureTestDb;User=sa;Password=contacts_book03;MultipleActiveResultSets=true
+        ConnectionStrings__DefaultConnection: Server=.;Database=ContactsBook;User=sa;Password=contacts_book03;
