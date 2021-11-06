@@ -28,7 +28,7 @@
     "@types/webpack-env": "^1.16.2",
     "css-loader": "^6.2.0",
     "sass": "^1.38.2",
-    "sass-loader": "^12.1.0",
+    "sass-loader": "^12.3.0",
     "style-loader": "^3.2.1",
     "ts-loader": "^9.2.4",
     "tslib": "^2.3.1",
