@@ -3,7 +3,7 @@ using ContactsBook.Application.Interfaces.PagedList;
 
 namespace ContactsBook.Application.PagedList;
 
-public record LimitationParameters : ILimitationParameters
+public record struct LimitationParameters : ILimitationParameters
 {
     public LimitationParameters(int pageSize = 20, int pageIndex = 0)
     {
@@ -16,10 +16,11 @@ public record LimitationParameters : ILimitationParameters
         PageSize = pageSize;
     }
 
-    private LimitationParameters()
+    public LimitationParameters(): this(20, 0)
     {
+
     }
 
-    public int PageIndex { get; init; }
-    public int PageSize { get; init; }
+    public int PageIndex { get; init; } = 0;
+    public int PageSize { get; init; } = 20;
 }

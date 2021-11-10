@@ -3,7 +3,7 @@ using ContactsBook.Utils;
 
 namespace ContactsBook.Domain.ValueObjects;
 
-public record PhoneNumber
+public record struct PhoneNumber
 {
     public PhoneNumber(long value)
     {

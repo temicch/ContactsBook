@@ -3,7 +3,7 @@ using ContactsBook.Utils;
 
 namespace ContactsBook.Domain.ValueObjects;
 
-public record Email
+public record struct Email
 {
     public Email(string value)
     {

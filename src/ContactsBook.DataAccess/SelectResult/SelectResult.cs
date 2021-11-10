@@ -3,7 +3,7 @@ using ContactsBook.Infrastructure.Interfaces.SelectResult;
 
 namespace ContactsBook.DataAccess.MsSql.SelectResult;
 
-public class SelectResult<T> : ISelectResult<T>
+public record struct SelectResult<T> : ISelectResult<T>
 {
     public SelectResult(List<T> items, int totalCount)
     {

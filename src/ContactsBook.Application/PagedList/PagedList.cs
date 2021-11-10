@@ -5,12 +5,8 @@ using ContactsBook.Application.Interfaces.PagedList;
 namespace ContactsBook.Application.PagedList;
 
 [Serializable]
-public class PagedList<T> : IPagedList<T>
+public record struct PagedList<T> : IPagedList<T>
 {
-    public PagedList()
-    {
-    }
-
     public PagedList(IEnumerable<T> source, ILimitationParameters limitationParameters, int totalCount)
     {
         if (totalCount < 0)
