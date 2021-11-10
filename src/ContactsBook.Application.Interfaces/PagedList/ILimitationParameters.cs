@@ -5,10 +5,10 @@ public interface ILimitationParameters
     /// <summary>
     ///     Page index
     /// </summary>
-    int PageIndex { get; init; }
+    int PageIndex { get; }
 
     /// <summary>
     ///     Page size
     /// </summary>
-    int PageSize { get; init; }
+    int PageSize { get; }
 }
