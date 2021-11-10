@@ -10,51 +10,50 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace ContactsBook.WebApi.Extensions
+namespace ContactsBook.WebApi.Extensions;
+
+internal static class MigrationExtensions
 {
-    internal static class MigrationExtensions
+    public static IHost MigrateDatabase(this IHost host)
     {
-        public static IHost MigrateDatabase(this IHost host)
+        using (var scope = host.Services.CreateScope())
         {
-            using (var scope = host.Services.CreateScope())
+            var services = scope.ServiceProvider;
+            var context = services.GetRequiredService<ContactsDbContext>();
+
+            try
             {
-                var services = scope.ServiceProvider;
-                var context = services.GetRequiredService<ContactsDbContext>();
-
-                try
+                if (context.Database.IsSqlServer())
                 {
-                    if (context.Database.IsSqlServer())
-                    {
-                        var isDbExists = (context.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator)
-                            ?.Exists();
+                    var isDbExists = (context.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator)
+                        ?.Exists();
 
-                        context.Database.Migrate();
+                    context.Database.Migrate();
 
-                        if (isDbExists != true)
-                            SeedData(services, context);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-                    logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-
-                    throw;
+                    if (isDbExists != true)
+                        SeedData(services, context);
                 }
             }
+            catch (Exception ex)
+            {
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-            return host;
+                logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+
+                throw;
+            }
         }
 
-        private static void SeedData(IServiceProvider serviceProvider, ContactsDbContext contactsDbContext)
-        {
-            var fakeGenerator = serviceProvider.GetRequiredService<IFakeDataGenerator<Contact>>();
+        return host;
+    }
 
-            var contacts = fakeGenerator.Generate(100).ToList();
+    private static void SeedData(IServiceProvider serviceProvider, ContactsDbContext contactsDbContext)
+    {
+        var fakeGenerator = serviceProvider.GetRequiredService<IFakeDataGenerator<Contact>>();
 
-            contactsDbContext.Contacts.AddRange(contacts);
-            contactsDbContext.SaveChanges();
-        }
+        var contacts = fakeGenerator.Generate(100).ToList();
+
+        contactsDbContext.Contacts.AddRange(contacts);
+        contactsDbContext.SaveChanges();
     }
 }

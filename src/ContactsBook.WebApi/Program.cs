@@ -1,24 +1,16 @@
-using System.Threading.Tasks;
+using ContactsBook.WebApi;
 using ContactsBook.WebApi.Extensions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Builder;
 
-namespace ContactsBook.WebApi
-{
-    public class Program
-    {
-        public static async Task Main(string[] args)
-        {
-            await CreateHostBuilder(args)
-                .Build()
-                .MigrateDatabase()
-                .RunAsync();
-        }
+var builder = WebApplication.CreateBuilder(args);
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
-        }
-    }
-}
+var startup = new Startup(builder.Configuration);
+
+startup.ConfigureServices(builder.Services);
+
+var app = builder.Build();
+app.MigrateDatabase();
+
+startup.Configure(app, app.Environment);
+
+app.Run();

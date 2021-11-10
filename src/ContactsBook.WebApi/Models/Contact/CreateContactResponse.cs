@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace ContactsBook.WebApi.Models.Contact
+namespace ContactsBook.WebApi.Models.Contact;
+
+public class CreateContactResponse
 {
-    public class CreateContactResponse
-    {
-        public Guid Id { get; init; }
-    }
+    public Guid Id { get; init; }
 }
