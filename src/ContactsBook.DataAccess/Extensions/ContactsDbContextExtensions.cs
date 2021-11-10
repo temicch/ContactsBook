@@ -11,182 +11,181 @@ using ContactsBook.Domain.ValueObjects;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 
-namespace ContactsBook.DataAccess.MsSql.Extensions
+namespace ContactsBook.DataAccess.MsSql.Extensions;
+
+internal static class ContactsDbContextExtensions
 {
-    internal static class ContactsDbContextExtensions
+    private const string SPLIT_PARAMETER = "PhoneNumber, Email";
+    internal static readonly string tableName = ContactsConfig.TABLE_NAME;
+
+    public static async Task<Guid> InsertAsync(this ContactsDbContext dbContext, Contact contact)
     {
-        private const string SPLIT_PARAMETER = "PhoneNumber, Email";
-        internal static readonly string tableName = ContactsConfig.TABLE_NAME;
+        var dbConnection = dbContext.Database.GetDbConnection();
 
-        public static async Task<Guid> InsertAsync(this ContactsDbContext dbContext, Contact contact)
-        {
-            var dbConnection = dbContext.Database.GetDbConnection();
+        var contactId = await dbConnection.ExecuteScalarAsync<Guid>(
+            $"INSERT INTO {tableName} (Id, Name, Email, PhoneNumber) output INSERTED.ID VALUES (@Id, @Name, @Email, @PhoneNumber)",
+            new
+            {
+                Id = Guid.NewGuid(),
+                contact.Name,
+                Email = contact.Email.Value,
+                PhoneNumber = contact.PhoneNumber.Value
+            });
+        contact.Id = contactId;
 
-            var contactId = await dbConnection.ExecuteScalarAsync<Guid>(
-                $"INSERT INTO {tableName} (Id, Name, Email, PhoneNumber) output INSERTED.ID VALUES (@Id, @Name, @Email, @PhoneNumber)",
-                new
+        return contactId;
+    }
+
+    public static async Task InsertAsync(this ContactsDbContext dbContext, IEnumerable<Contact> contacts)
+    {
+        var dbConnection = dbContext.Database.GetDbConnection();
+
+        var result = await dbConnection.ExecuteAsync(
+            $"INSERT INTO {tableName} (Id, Name, Email, PhoneNumber) VALUES (@Id, @Name, @Email, @PhoneNumber)",
+            contacts
+                .Select(x => new
                 {
                     Id = Guid.NewGuid(),
-                    contact.Name,
-                    Email = contact.Email.Value,
-                    PhoneNumber = contact.PhoneNumber.Value
-                });
-            contact.Id = contactId;
+                    x.Name,
+                    Email = x.Email.Value,
+                    PhoneNumber = x.PhoneNumber.Value
+                }).ToList());
+    }
 
-            return contactId;
-        }
+    public static async Task<bool> DeleteByIdAsync(this ContactsDbContext dbContext, Guid id)
+    {
+        var dbConnection = dbContext.Database.GetDbConnection();
 
-        public static async Task InsertAsync(this ContactsDbContext dbContext, IEnumerable<Contact> contacts)
-        {
-            var dbConnection = dbContext.Database.GetDbConnection();
+        var result = await dbConnection.ExecuteAsync($"DELETE FROM {tableName} WHERE Id = @Id", new { Id = id });
 
-            var result = await dbConnection.ExecuteAsync(
-                $"INSERT INTO {tableName} (Id, Name, Email, PhoneNumber) VALUES (@Id, @Name, @Email, @PhoneNumber)",
-                contacts
-                    .Select(x => new
-                    {
-                        Id = Guid.NewGuid(),
-                        x.Name,
-                        Email = x.Email.Value,
-                        PhoneNumber = x.PhoneNumber.Value
-                    }).ToList());
-        }
+        return result > 0;
+    }
 
-        public static async Task<bool> DeleteByIdAsync(this ContactsDbContext dbContext, Guid id)
-        {
-            var dbConnection = dbContext.Database.GetDbConnection();
+    public static async Task<bool> UpdateAsync(this ContactsDbContext dbContext, Contact contact)
+    {
+        var dbConnection = dbContext.Database.GetDbConnection();
 
-            var result = await dbConnection.ExecuteAsync($"DELETE FROM {tableName} WHERE Id = @Id", new {Id = id});
+        var result = await dbConnection.ExecuteAsync(
+            $"UPDATE {tableName} SET Name = @Name, Email = @Email, PhoneNumber = @PhoneNumber where Id = @Id", new
+            {
+                contact.Id,
+                contact.Name,
+                Email = contact.Email.ToString(),
+                PhoneNumber = contact.PhoneNumber.ToString()
+            });
 
-            return result > 0;
-        }
+        return result > 0;
+    }
 
-        public static async Task<bool> UpdateAsync(this ContactsDbContext dbContext, Contact contact)
-        {
-            var dbConnection = dbContext.Database.GetDbConnection();
+    public static async Task<Contact> GetByIdAsync(this ContactsDbContext dbContext, Guid id)
+    {
+        var dbConnection = dbContext.Database.GetDbConnection();
 
-            var result = await dbConnection.ExecuteAsync(
-                $"UPDATE {tableName} SET Name = @Name, Email = @Email, PhoneNumber = @PhoneNumber where Id = @Id", new
-                {
-                    contact.Id,
-                    contact.Name,
-                    Email = contact.Email.ToString(),
-                    PhoneNumber = contact.PhoneNumber.ToString()
-                });
+        var contact = await dbConnection.QueryAsync<Contact, long, string, Contact>(
+            $"SELECT Id, Name, PhoneNumber, Email from {tableName} WHERE Id = @Id",
+            (contact, phoneNumber, email) =>
+            {
+                contact.Email = new Email(email);
+                contact.PhoneNumber = new PhoneNumber(phoneNumber);
 
-            return result > 0;
-        }
+                return contact;
+            }, new { Id = id }, splitOn: SPLIT_PARAMETER);
 
-        public static async Task<Contact> GetByIdAsync(this ContactsDbContext dbContext, Guid id)
-        {
-            var dbConnection = dbContext.Database.GetDbConnection();
+        return contact.FirstOrDefault();
+    }
 
-            var contact = await dbConnection.QueryAsync<Contact, long, string, Contact>(
-                $"SELECT Id, Name, PhoneNumber, Email from {tableName} WHERE Id = @Id",
-                (contact, phoneNumber, email) =>
-                {
-                    contact.Email = new Email(email);
-                    contact.PhoneNumber = new PhoneNumber(phoneNumber);
+    public static async Task<Contact> GetByPhoneNumberAsync(this ContactsDbContext dbContext, string phoneNumber)
+    {
+        var dbConnection = dbContext.Database.GetDbConnection();
 
-                    return contact;
-                }, new {Id = id}, splitOn: SPLIT_PARAMETER);
+        var contact = await dbConnection.QueryAsync<Contact, long, string, Contact>(
+            $"SELECT Id, Name, PhoneNumber, Email from {tableName} WHERE PhoneNumber = @PhoneNumber",
+            (contact, phoneNumber, email) =>
+            {
+                contact.Email = new Email(email);
+                contact.PhoneNumber = new PhoneNumber(phoneNumber);
 
-            return contact.FirstOrDefault();
-        }
+                return contact;
+            }, new { PhoneNumber = phoneNumber }, splitOn: SPLIT_PARAMETER);
 
-        public static async Task<Contact> GetByPhoneNumberAsync(this ContactsDbContext dbContext, string phoneNumber)
-        {
-            var dbConnection = dbContext.Database.GetDbConnection();
+        return contact.FirstOrDefault();
+    }
 
-            var contact = await dbConnection.QueryAsync<Contact, long, string, Contact>(
-                $"SELECT Id, Name, PhoneNumber, Email from {tableName} WHERE PhoneNumber = @PhoneNumber",
-                (contact, phoneNumber, email) =>
-                {
-                    contact.Email = new Email(email);
-                    contact.PhoneNumber = new PhoneNumber(phoneNumber);
+    public static async Task<SelectResult<Contact>> GetAsync(this ContactsDbContext dbContext,
+        ILimitationParameters limitationParameters)
+    {
+        var dbConnection = dbContext.Database.GetDbConnection();
 
-                    return contact;
-                }, new {PhoneNumber = phoneNumber}, splitOn: SPLIT_PARAMETER);
+        var totalCount = await dbConnection.Count();
+        var list = await dbConnection.QueryAsync<Contact, long, string, Contact>(
+            $"SELECT Id, Name, PhoneNumber, Email from {tableName} {limitationParameters.GetMSSqlAddition()}",
+            (contact, phoneNumber, email) =>
+            {
+                contact.Email = new Email(email);
+                contact.PhoneNumber = new PhoneNumber(phoneNumber);
 
-            return contact.FirstOrDefault();
-        }
+                return contact;
+            }, splitOn: SPLIT_PARAMETER);
 
-        public static async Task<SelectResult<Contact>> GetAsync(this ContactsDbContext dbContext,
-            ILimitationParameters limitationParameters)
-        {
-            var dbConnection = dbContext.Database.GetDbConnection();
+        return new SelectResult<Contact>(list.AsList(), totalCount);
+    }
 
-            var totalCount = await dbConnection.Count();
-            var list = await dbConnection.QueryAsync<Contact, long, string, Contact>(
-                $"SELECT Id, Name, PhoneNumber, Email from {tableName} {limitationParameters.GetMSSqlAddition()}",
-                (contact, phoneNumber, email) =>
-                {
-                    contact.Email = new Email(email);
-                    contact.PhoneNumber = new PhoneNumber(phoneNumber);
+    public static async Task<SelectResult<Contact>> FindByPhoneNumberAsync(this ContactsDbContext dbContext,
+        string phoneNumber,
+        ILimitationParameters limitationParameters)
+    {
+        var dbConnection = dbContext.Database.GetDbConnection();
 
-                    return contact;
-                }, splitOn: SPLIT_PARAMETER);
+        var totalCount = await dbConnection.Count("WHERE PhoneNumber LIKE @PhoneNumber",
+            new { PhoneNumber = $"%{phoneNumber}%" });
 
-            return new SelectResult<Contact>(list.AsList(), totalCount);
-        }
+        var list = await dbConnection.QueryAsync<Contact, long, string, Contact>(
+            $"SELECT Id, Name, PhoneNumber, Email from {tableName} WHERE PhoneNumber LIKE @PhoneNumber {limitationParameters.GetMSSqlAddition()}",
+            (contact, phoneNumber, email) =>
+            {
+                contact.Email = new Email(email);
+                contact.PhoneNumber = new PhoneNumber(phoneNumber);
 
-        public static async Task<SelectResult<Contact>> FindByPhoneNumberAsync(this ContactsDbContext dbContext,
-            string phoneNumber,
-            ILimitationParameters limitationParameters)
-        {
-            var dbConnection = dbContext.Database.GetDbConnection();
+                return contact;
+            }, new { PhoneNumber = $"%{phoneNumber}%" }, splitOn: SPLIT_PARAMETER);
 
-            var totalCount = await dbConnection.Count("WHERE PhoneNumber LIKE @PhoneNumber",
-                new {PhoneNumber = $"%{phoneNumber}%"});
+        return new SelectResult<Contact>(list.AsList(), totalCount);
+    }
 
-            var list = await dbConnection.QueryAsync<Contact, long, string, Contact>(
-                $"SELECT Id, Name, PhoneNumber, Email from {tableName} WHERE PhoneNumber LIKE @PhoneNumber {limitationParameters.GetMSSqlAddition()}",
-                (contact, phoneNumber, email) =>
-                {
-                    contact.Email = new Email(email);
-                    contact.PhoneNumber = new PhoneNumber(phoneNumber);
+    public static async Task<bool> IsPhoneNumberExistAsync(this ContactsDbContext dbContext, string phoneNumber)
+    {
+        var dbConnection = dbContext.Database.GetDbConnection();
 
-                    return contact;
-                }, new {PhoneNumber = $"%{phoneNumber}%"}, splitOn: SPLIT_PARAMETER);
+        var totalCount = await dbConnection.Count("WHERE PhoneNumber = @PhoneNumber",
+            new { PhoneNumber = $"{phoneNumber}" });
 
-            return new SelectResult<Contact>(list.AsList(), totalCount);
-        }
+        return totalCount > 0;
+    }
 
-        public static async Task<bool> IsPhoneNumberExistAsync(this ContactsDbContext dbContext, string phoneNumber)
-        {
-            var dbConnection = dbContext.Database.GetDbConnection();
+    public static async Task<SelectResult<Contact>> GetByNameAsync(this ContactsDbContext dbContext,
+        string name,
+        ILimitationParameters limitationParameters)
+    {
+        var dbConnection = dbContext.Database.GetDbConnection();
 
-            var totalCount = await dbConnection.Count("WHERE PhoneNumber = @PhoneNumber",
-                new {PhoneNumber = $"{phoneNumber}"});
+        var totalCount = await dbConnection.Count("WHERE Name LIKE @Name", new { Name = $"%{name}%" });
+        var list = await dbConnection.QueryAsync<Contact, long, string, Contact>(
+            $"SELECT Id, Name, PhoneNumber, Email from {tableName} WHERE Name LIKE @Name {limitationParameters.GetMSSqlAddition()}",
+            (contact, phoneNumber, email) =>
+            {
+                contact.Email = new Email(email);
+                contact.PhoneNumber = new PhoneNumber(phoneNumber);
 
-            return totalCount > 0;
-        }
+                return contact;
+            }, new { Name = $"%{name}%" }, splitOn: SPLIT_PARAMETER);
 
-        public static async Task<SelectResult<Contact>> GetByNameAsync(this ContactsDbContext dbContext,
-            string name,
-            ILimitationParameters limitationParameters)
-        {
-            var dbConnection = dbContext.Database.GetDbConnection();
+        return new SelectResult<Contact>(list.AsList(), totalCount);
+    }
 
-            var totalCount = await dbConnection.Count("WHERE Name LIKE @Name", new {Name = $"%{name}%"});
-            var list = await dbConnection.QueryAsync<Contact, long, string, Contact>(
-                $"SELECT Id, Name, PhoneNumber, Email from {tableName} WHERE Name LIKE @Name {limitationParameters.GetMSSqlAddition()}",
-                (contact, phoneNumber, email) =>
-                {
-                    contact.Email = new Email(email);
-                    contact.PhoneNumber = new PhoneNumber(phoneNumber);
-
-                    return contact;
-                }, new {Name = $"%{name}%"}, splitOn: SPLIT_PARAMETER);
-
-            return new SelectResult<Contact>(list.AsList(), totalCount);
-        }
-
-        private static async Task<int> Count(this DbConnection dbConnection, string filter = "",
-            object parameters = null)
-        {
-            return await dbConnection.QuerySingleOrDefaultAsync<int>($"SELECT COUNT(*) FROM {tableName} {filter}",
-                parameters);
-        }
+    private static async Task<int> Count(this DbConnection dbConnection, string filter = "",
+        object parameters = null)
+    {
+        return await dbConnection.QuerySingleOrDefaultAsync<int>($"SELECT COUNT(*) FROM {tableName} {filter}",
+            parameters);
     }
 }

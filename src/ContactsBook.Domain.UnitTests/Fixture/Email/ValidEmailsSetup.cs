@@ -1,17 +1,16 @@
 ﻿using Xunit;
 
-namespace ContactsBook.Domain.UnitTests.Fixture.Email
+namespace ContactsBook.Domain.UnitTests.Fixture.Email;
+
+public class ValidEmailsSetup : TheoryData<string>
 {
-    public class ValidEmailsSetup : TheoryData<string>
+    public ValidEmailsSetup()
     {
-        public ValidEmailsSetup()
-        {
-            Add("a@email.com");
-            Add("a@il.com");
-            Add("a@ifl.m");
-            Add("aasdaf@i.m");
-            Add("");
-            Add(null);
-        }
+        Add("a@email.com");
+        Add("a@il.com");
+        Add("a@ifl.m");
+        Add("aasdaf@i.m");
+        Add("");
+        Add(null);
     }
 }
