@@ -2,31 +2,30 @@
 using ContactsBook.WebApi.Extensions;
 using FluentValidation;
 
-namespace ContactsBook.WebApi.Models.Contact
+namespace ContactsBook.WebApi.Models.Contact;
+
+public class CreateContactRequest
 {
-    public class CreateContactRequest
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public long PhoneNumber { get; set; }
+}
+
+public class CreateContactRequstValidator : AbstractValidator<CreateContactRequest>
+{
+    public CreateContactRequstValidator(IContactsService contactsService)
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public long PhoneNumber { get; set; }
-    }
+        RuleFor(x => x.Name)
+            .CbName();
 
-    public class CreateContactRequstValidator : AbstractValidator<CreateContactRequest>
-    {
-        public CreateContactRequstValidator(IContactsService contactsService)
-        {
-            RuleFor(x => x.Name)
-                .CbName();
+        RuleFor(x => x.Email)
+            .CbEmailAddress();
 
-            RuleFor(x => x.Email)
-                .CbEmailAddress();
-
-            RuleFor(x => x.PhoneNumber)
-                .Cascade(CascadeMode.Stop)
-                .CbPhoneNumber()
-                .MustAsync(async (phoneNumber, cancellationToken) =>
-                    !await contactsService.IsPhoneNumberExistsAsync(phoneNumber.ToString()))
-                .WithMessage("Contact with phone number '{PropertyValue}' is already exists");
-        }
+        RuleFor(x => x.PhoneNumber)
+            .Cascade(CascadeMode.Stop)
+            .CbPhoneNumber()
+            .MustAsync(async (phoneNumber, cancellationToken) =>
+                !await contactsService.IsPhoneNumberExistsAsync(phoneNumber.ToString()))
+            .WithMessage("Contact with phone number '{PropertyValue}' is already exists");
     }
 }

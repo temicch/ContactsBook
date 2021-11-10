@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-using System.Reflection;
 using Bogus;
 using ContactsBook.Application;
 using ContactsBook.Application.Interfaces.Services;
@@ -19,72 +16,74 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
+using System.IO;
+using System.Reflection;
 
-namespace ContactsBook.WebApi
+namespace ContactsBook.WebApi;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
+        Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddCors(options =>
         {
-            Configuration = configuration;
+            options.AddPolicy("CorsPolicy", builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+        });
+
+        services.AddControllers()
+            .AddFluentValidation();
+
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "ContactsBook.WebApi", Version = "v1" });
+
+            var filePath = Path.Combine(AppContext.BaseDirectory, "ContactsBook.WebApi.xml");
+            c.IncludeXmlComments(filePath);
+        });
+
+        services.AddDbContext<ContactsDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+        services.AddScoped<IContactRepository<Contact>, ContactRepository>();
+
+        services.AddTransient<IContactsService, ContactsService>();
+        services.AddTransient<IFakeDataGenerator<Contact>, ContactsSeed>();
+        services.AddTransient<Faker<Contact>>();
+
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+        services.AddAutoMapper(typeof(ApplicationMapping), typeof(WebApiMapping));
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
         }
 
-        public IConfiguration Configuration { get; }
+        app.UseSwagger();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ContactsBook.WebApi v1"));
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy", builder => builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
-            });
+        app.UseCors("CorsPolicy");
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
 
-            services.AddControllers()
-                .AddFluentValidation();
+        app.UseRouting();
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "ContactsBook.WebApi", Version = "v1"});
+        app.UseAuthorization();
 
-                var filePath = Path.Combine(AppContext.BaseDirectory, "ContactsBook.WebApi.xml");
-                c.IncludeXmlComments(filePath);
-            });
-
-            services.AddDbContext<ContactsDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddScoped<IContactRepository<Contact>, ContactRepository>();
-
-            services.AddTransient<IContactsService, ContactsService>();
-            services.AddTransient<IFakeDataGenerator<Contact>, ContactsSeed>();
-            services.AddTransient<Faker<Contact>>();
-
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
-            services.AddAutoMapper(typeof(ApplicationMapping), typeof(WebApiMapping));
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ContactsBook.WebApi v1"));
-
-            app.UseCors("CorsPolicy");
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-        }
+        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     }
 }
