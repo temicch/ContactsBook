@@ -147,9 +147,4 @@ public class ContactsController : ControllerBase
 
         return NoContent();
     }
-
-    public Task Del()
-    {
-        return Task.CompletedTask;
-    }
 }
