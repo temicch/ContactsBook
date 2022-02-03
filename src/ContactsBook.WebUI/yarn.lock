@@ -811,10 +811,10 @@ icss-utils@^5.0.0, icss-utils@^5.1.0:
   resolved "https://registry.yarnpkg.com/icss-utils/-/icss-utils-5.1.0.tgz#c6be6858abd013d768e98366ae47e25d5887b1ae"
   integrity sha512-soFhflCVWLfRNOPU3iv5Z9VUdT44xFRbzjLsEzSr5AQmgqPMTHdU3PMT1Cf1ssx8fLNJDA1juftYl+PUcv3MqA==
 
-imask@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/imask/-/imask-6.1.0.tgz#8dcf4c44c51c4297f691349b925b7d5b21edff1c"
-  integrity sha512-IuElVZpc7iuGw+CXfwoUZYpGdoD5H7cGo3S93gZPgjTTWfY5XAXCFL3g3b/ZJBZ18RG2dFF2kxAuuFlXMjq7oQ==
+imask@^6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/imask/-/imask-6.4.0.tgz#76e48e6bbf5306f7de058f8a1b90fd2282d446bc"
+  integrity sha512-iXXgSQA6TJX/RSKivKoTYYoCc4ZmVseMcoDIxMrlW1JPpc8LU9FtCp3f80vg1eUQvmVfEQbh+vybFVDRt2o9TQ==
 
 immutable@^4.0.0:
   version "4.0.0"
@@ -1668,6 +1668,11 @@ vue-avatar@^2.3.3:
   resolved "https://registry.yarnpkg.com/vue-avatar/-/vue-avatar-2.3.3.tgz#e125bf4f4a6f4f9480da0c522020266a8609d2a8"
   integrity sha512-Z57ILRTkFIAuCH9JiFBxX74C5zua5ub/jRDM/KZ+QKXNfscvmUOgWBs3kA2+wrpZMowIvfLHIT0gvQu1z+zpLg==
 
+vue-demi@^0.11.2:
+  version "0.11.4"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.11.4.tgz#6101992fe4724cf5634018a16e953f3052e94e2a"
+  integrity sha512-/3xFwzSykLW2HiiLie43a+FFgNOcokbBJ+fzvFXd0r2T8MYohqvphUyDQ8lbAwzQ3Dlcrb1c9ykifGkhSIAk6A==
+
 vue-final-modal@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/vue-final-modal/-/vue-final-modal-2.4.1.tgz#7c3776295fecbd456e4f83de921379f1d980590a"
@@ -1678,12 +1683,13 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
 
-vue-imask@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/vue-imask/-/vue-imask-6.1.0.tgz#589a4781ab8629e776dc93527d321466b9f9a907"
-  integrity sha512-7qaJ1wfQ2uesYQg0qsfnd3zxhvyy2tlld+h3byjKRryh1KInRrSNHp6g6xzFK28fVutIBG/lOJsX+YJMsJrOBw==
+vue-imask@^6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/vue-imask/-/vue-imask-6.4.0.tgz#14088a5fd11766bb4310fae25896a059201a3fc8"
+  integrity sha512-0cWxdLlLtEdnGPQ7gq3UQaXC1lGveK+F/yRrln/0Y9nnwQ+8OEAamlB+S/9+IoGpOvoxZ2iCTOyf3B01sPgP8g==
   dependencies:
-    imask "^6.1.0"
+    imask "^6.4.0"
+    vue-demi "^0.11.2"
 
 vue-infinite-loading@^2.4.5:
   version "2.4.5"
