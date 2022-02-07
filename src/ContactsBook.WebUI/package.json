@@ -13,7 +13,7 @@
     "axios": "^0.25.0",
     "normalize.css": "^8.0.1",
     "throttle-debounce": "^3.0.1",
-    "vue": "^2.6.14",
+    "vue": "^3.2.30",
     "vue-avatar": "^2.3.3",
     "vue-final-modal": "^2.4.1",
     "vue-imask": "^6.1.0",
