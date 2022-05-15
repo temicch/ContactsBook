@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from "axios";
 
 export default class ContactsApiProvider implements ApiProvider<Contact> {
   public static conduitApi: AxiosInstance = axios.create({
-    baseURL: "https://localhost:44362/api"
+    baseURL: "https://localhost:5001/api"
   });
 
   async GetAll(
