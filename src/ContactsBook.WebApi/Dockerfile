@@ -14,6 +14,7 @@ COPY ["ContactsBook.Infrastructure.Interfaces/ContactsBook.Infrastructure.Interf
 COPY ["ContactsBook.DataAccess/ContactsBook.DataAccess.MsSql.csproj", "ContactsBook.DataAccess/"]
 RUN dotnet restore "ContactsBook.WebApi/ContactsBook.WebApi.csproj"
 COPY . .
+COPY ./appsettings.Docker.json ./appsettings.json
 WORKDIR "/src/ContactsBook.WebApi"
 RUN dotnet build "ContactsBook.WebApi.csproj" -c Release -o /app/build
 
