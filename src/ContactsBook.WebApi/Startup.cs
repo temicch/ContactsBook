@@ -42,7 +42,10 @@ public class Startup
         });
 
         services.AddControllers()
-            .AddFluentValidation();
+            .AddFluentValidation(fv =>
+            {
+                fv.AutomaticValidationEnabled = false;
+            });
 
         services.AddSwaggerGen(c =>
         {
